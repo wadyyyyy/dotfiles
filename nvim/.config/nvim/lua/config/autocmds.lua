@@ -13,3 +13,10 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.formatoptions:remove({ "r", "o" })
   end,
 })
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*/ghostty/config.ghostty",
+  callback = function()
+    vim.bo.filetype = "conf"
+  end,
+})

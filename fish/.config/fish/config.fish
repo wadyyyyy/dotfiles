@@ -63,6 +63,7 @@ end
 
 alias ffch "fastfetch --config ~/.config/fastfetch/custom.jsonc"
 alias ff "fastfetch --config ~/.config/fastfetch/apple.jsonc"
+abbr -a c clear
 
 # bind ctrl-o 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
 # bind -M insert ctrl-o 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'

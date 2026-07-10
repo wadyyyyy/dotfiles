@@ -5,18 +5,20 @@ cursor-text = #24273a
 background-blur = true
 background-opacity = 0.7
 
-background = #282828
+background = #202020
 
 font-size = 16.0
 # font-family = "0xProto Nerd Font Mono"
 # font-family = "Iosevka Fixed"
-# font-family = "FiraMono Nerd Font Mono"
-font-family = "FiraCode Nerd Font Mono" 
+font-family = "FiraCode Nerd Font Propo" 
+# font-family = "FiraCode Nerd Font Mono" 
 font-feature = cv31
 font-feature = cv06
 font-feature = ss04
 font-feature = -calt
 # ( ) i $ <=
+
+font-style = medium
 
 adjust-cell-height = 8
 adjust-cell-width = 1
@@ -35,4 +37,4 @@ quick-terminal-position = center
 # custom-shader = shaders/cursor_warp.glsl
 # custom-shader = shaders/cursor_tail.glsl
 # custom-shader = shaders/bettercrt.glsl
-custom-shader = shaders/bloom.glsl
+# custom-shader = shaders/bloom.glsl

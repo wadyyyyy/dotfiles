@@ -1,3 +1,3 @@
 return {
-  { "typicode/bg.nvim", lazy = false, enabled = false },
+  { "typicode/bg.nvim", lazy = false, enabled = true },
 }
