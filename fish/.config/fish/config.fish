@@ -61,17 +61,17 @@ function cheat
     curl -s "https://cheat.sh/$argv"
 end
 
-alias ffch "fastfetch --config ~/.config/fastfetch/custom.jsonc"
+alias sexy "fastfetch --config ~/.config/fastfetch/custom.jsonc"
 alias ff "fastfetch --config ~/.config/fastfetch/apple.jsonc"
 abbr -a c clear
 
-# bind ctrl-o 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
-# bind -M insert ctrl-o 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
-# bind -M visual ctrl-o 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
+bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
+bind -M insert ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
+bind -M visual ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
 
-bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; clear; ffch; commandline -f repaint'
-bind -M insert ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; clear; ffch; commandline -f repaint'
-bind -M visual ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; clear; ffch; commandline -f repaint'
+# bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; clear; sexy; commandline -f repaint'
+# bind -M insert ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; clear; sexy; commandline -f repaint'
+# bind -M visual ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; clear; sexy; commandline -f repaint'
 
 alias buildcont21="docker-buildx build -t s21_env ."
 
