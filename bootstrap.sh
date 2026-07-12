@@ -5,7 +5,6 @@ echo "setting macos defaults..."
 defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 defaults write com.apple.dock autohide -bool true
 defaults write com.apple.dock autohide-delay -float 0
@@ -24,9 +23,6 @@ defaults write com.apple.HIToolbox AppleFnUsageType -int 0
 defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
-defaults write NSGlobalDomain AppleAccentColor -int 1
-defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.874510 0.701961 Orange"
 
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
