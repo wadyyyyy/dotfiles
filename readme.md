@@ -40,7 +40,7 @@ dotfiles/
 ## Quick start
 
 ```bash
-git clone https://github.com/<your-username>/dotfiles.git ~/dotfiles
+git clone https://github.com/wadyyyyy/dotfiles.git ~/dotfiles
 cd ~/dotfiles/
 bash bootstrap.sh
 ```
