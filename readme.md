@@ -13,6 +13,7 @@ Personal macOS dotfiles: shell, terminal, WM, status bar, editor, and CLI toolin
 - `nvim` — LazyVim-based Neovim config.
 - `karabiner` — keyboard remaps.
 - `fastfetch` — preset (`apple.jsonc`).
+- Brewfile — brew dump.
 
 ## Repository layout
 
@@ -28,7 +29,8 @@ dotfiles/
 ├── nvim/.config/nvim/*
 ├── sketchybar/.config/sketchybar/*
 ├── starship/.config/starship.toml
-└── tmux/.config/tmux/tmux.conf
+├── tmux/.config/tmux/tmux.conf
+└── Brewfile
 ```
 
 ## Quick start
@@ -38,6 +40,7 @@ git clone https://github.com/<your-username>/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 brew install stow
 stow */
+brew bundle --file=Brewfile
 ```
 
 ## Dependencies
@@ -56,4 +59,3 @@ Core tools used across these configs:
 - `sketchybar`
 - `karabiner-elements`
 - Nerd Font
-
