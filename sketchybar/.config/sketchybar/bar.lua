@@ -12,4 +12,5 @@ sbar.bar({
 	corner_radius = 10,
 	border_width = 1,
 	border_color = colors.bar.border_color,
+	shadow = off,
 })
