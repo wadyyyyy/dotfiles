@@ -13,19 +13,24 @@ local colors = {
 	transparent = 0x00000000,
 
 	bar = {
-		bg = 0x00000000,
-		border = 0xff747195,
+		bg = 0xb3202020,
+		border_color = 0x35e2e2e3,
 	},
 	popup = {
 		-- bg = 0xc02c2e34,
 		bg = 0x00000000,
 		border = 0xff7f8490,
 	},
-	-- bg1 = 0x88363944,
-	bg2 = 0x88414550,
 
-	bg1 = 0xff111111,
+	-- element container color
+	-- bg1 = 0x44363944,
+	-- bg1 = 0xff111111,
+	bg1 = 0x10e2e2e3,
+
+	-- element container border color
 	-- bg2 = 0xff111111,
+	-- bg2 = 0x88414550, -- last one
+	bg2 = 0x40e2e2e3,
 
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then
@@ -34,44 +39,6 @@ local colors = {
 		return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 	end,
 }
-
--- local colors = {
--- 	-- Catppuccin Macchiato
--- 	black = 0xff1e2030, -- Mantle (основной темный)
--- 	white = 0xffcad3f5, -- Text
--- 	red = 0xfeed8794, -- Red
--- 	green = 0xffa6da95, -- Green
--- 	blue = 0xff8aadf4, -- Blue
--- 	yellow = 0xffeed49f, -- Yellow
--- 	orange = 0xfff5a97f, -- Peach
--- 	magenta = 0xffc6a0f6, -- Mauve
--- 	grey = 0xff5b6078, -- Surface 1
--- 	transparent = 0x00000000,
---
--- 	bar = {
--- 		-- catpuccin
--- 		-- bg = 0xbb24273a,
--- 		-- border = 0xff363a4f,
--- 	},
---
--- 	-- Настройки всплывающих окон (Popups)
--- 	popup = {
--- 		bg = 0x201e2030, -- Более темный плотный Mantle для читаемости
--- 		border = 0xff5b6078, -- Surface 1
--- 	},
---
--- 	-- Дополнительные подложки для "островков" (активных элементов)
--- 	bg1 = 0xbb363a4f, -- Surface 0
--- 	bg2 = 0xbb494d64, -- Surface 1
---
--- 	-- Твоя функция динамической альфы (оставляем, она отличная)
--- 	with_alpha = function(color, alpha)
--- 		if alpha > 1.0 or alpha < 0.0 then
--- 			return color
--- 		end
--- 		return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
--- 	end,
--- }
 
 -- Shared pill style for bar item groups (menus, apple, spaces, widgets, calendar)
 colors.island = {

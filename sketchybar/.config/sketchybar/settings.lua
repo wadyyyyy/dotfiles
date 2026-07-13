@@ -2,9 +2,9 @@ local font = require("helpers.default_font")
 
 local ui = {
 	bar_height = 32,
-	item_height = 24,
-	item_corner_radius = 9,
-	item_border_width = 1,
+	item_height = 22,
+	item_corner_radius = 6,
+	item_border_width = 0,
 	item_image_corner_radius = 8,
 }
 
@@ -26,6 +26,7 @@ return {
 	group_paddings = 5,
 
 	icons = "sf-symbols", -- alternatively available: NerdFont
+	-- icons = "NerdFont",
 
 	font = font,
 	label_font = {
