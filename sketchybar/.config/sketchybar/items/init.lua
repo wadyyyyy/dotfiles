@@ -1,5 +1,4 @@
--- require("items.apple")
-sbar.add("item", { position = "left", width = 4 }) -- отступ вместо иконки apple
+sbar.add("item", "left.spacer", { position = "left", width = 4 })
 
 require("items.aerospace")
 require("items.front_app")

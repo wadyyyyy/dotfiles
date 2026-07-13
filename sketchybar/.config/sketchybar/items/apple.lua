@@ -2,8 +2,7 @@ local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
 
--- Padding item required because of bracket
-sbar.add("item", { width = 5 })
+sbar.add("item", "apple.left.padding", { width = 5 })
 
 local apple = sbar.add("item", {
 	icon = {
@@ -21,5 +20,4 @@ sbar.add("bracket", { apple.name }, {
 	background = colors.island,
 })
 
--- Padding item required because of bracket
-sbar.add("item", { width = 7 })
+sbar.add("item", "apple.right.padding", { width = 7 })

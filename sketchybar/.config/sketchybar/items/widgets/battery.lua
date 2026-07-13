@@ -11,7 +11,7 @@ local battery = sbar.add("item", "widgets.battery", {
 		},
 	},
 	label = { font = settings.label_font },
-	update_freq = 180,
+	update_freq = settings.widgets.battery.update_freq,
 })
 
 battery:subscribe({ "routine", "power_source_change", "system_woke" }, function()
@@ -66,5 +66,5 @@ sbar.add("bracket", "widgets.battery.bracket", { battery.name }, {
 
 sbar.add("item", "widgets.battery.padding", {
 	position = "right",
-	width = settings.group_paddings,
+	width = settings.group_padding,
 })

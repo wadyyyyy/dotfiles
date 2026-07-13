@@ -1,14 +1,20 @@
--- Register the event in Sketchybar synchronously so it's ready for subscription
-os.execute("sketchybar --add event input_change 'AppleSelectedInputSourcesChangedNotification' 2>/dev/null || true")
-
 local colors = require("colors")
 local settings = require("settings")
+local keyboard_settings = settings.widgets.keyboard
+
+os.execute(
+	string.format(
+		"sketchybar --add event %s '%s' 2>/dev/null",
+		keyboard_settings.event_name,
+		keyboard_settings.notification
+	)
+)
 
 local keyboard = sbar.add("item", "widgets.keyboard", {
 	position = "right",
 	icon = { drawing = false },
 	label = {
-		string = "??",
+		string = keyboard_settings.default_label,
 		font = settings.label_font,
 		align = "left",
 		padding_left = 6,
@@ -23,7 +29,7 @@ sbar.add("bracket", "widgets.keyboard.bracket", { keyboard.name }, {
 
 sbar.add("item", "widgets.keyboard.padding", {
 	position = "right",
-	width = settings.group_paddings,
+	width = settings.group_padding,
 })
 
 local layout_script = [[
@@ -32,16 +38,13 @@ defaults read ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInput
 
 local function normalize_layout(raw)
 	if not raw or raw == "" then
-		return "??"
+		return keyboard_settings.default_label
 	end
-	raw = raw:gsub("^%s*(.-)%s*$", "%1") -- trim whitespace
+	raw = raw:gsub("^%s*(.-)%s*$", "%1")
 
-	-- Common simple mappings:
-	if raw == "Russian" or raw == "RussianWin" then
-		return "RU"
-	end
-	if raw == "ABC" or raw == "U.S." or raw == "US" then
-		return "EN"
+	local mapped_layout = keyboard_settings.layout_aliases[raw]
+	if mapped_layout then
+		return mapped_layout
 	end
 
 	return string.sub(raw:upper(), 1, 2)
@@ -54,7 +57,6 @@ local function update_layout()
 	end)
 end
 
-keyboard:subscribe({ "input_change", "system_woke" }, update_layout)
+keyboard:subscribe({ keyboard_settings.event_name, "system_woke" }, update_layout)
 
--- Trigger an initial update immediately
 update_layout()

@@ -1,7 +1,6 @@
 local colors = require("colors")
 local settings = require("settings")
 
--- Equivalent to the --bar domain
 sbar.bar({
 	height = settings.ui.bar_height,
 	color = colors.bar.bg,
@@ -10,9 +9,7 @@ sbar.bar({
 	display = 1,
 	margin = 8,
 	y_offset = 6,
-	-- corner_radius = 13,
 	corner_radius = 10,
 	border_width = 1,
 	border_color = colors.bar.border_color,
-	-- position = "left",
 })

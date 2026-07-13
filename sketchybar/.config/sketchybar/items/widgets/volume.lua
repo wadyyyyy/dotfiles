@@ -2,7 +2,7 @@ local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
 
-local volume_percent = sbar.add("item", "widgets.volume1", {
+local volume_percent = sbar.add("item", "widgets.volume.percent", {
 	position = "right",
 	icon = { drawing = false },
 	label = {
@@ -12,7 +12,7 @@ local volume_percent = sbar.add("item", "widgets.volume1", {
 	},
 })
 
-local volume_icon = sbar.add("item", "widgets.volume2", {
+local volume_icon = sbar.add("item", "widgets.volume.icon", {
 	position = "right",
 	padding_right = -1,
 	icon = {
@@ -26,7 +26,7 @@ local volume_icon = sbar.add("item", "widgets.volume2", {
 		},
 	},
 	label = {
-		width = 25,
+		width = settings.widgets.volume.label_width,
 		align = "left",
 		font = {
 			style = settings.font.style_map["Regular"],
@@ -44,7 +44,7 @@ sbar.add("bracket", "widgets.volume.bracket", {
 
 sbar.add("item", "widgets.volume.padding", {
 	position = "right",
-	width = settings.group_paddings,
+	width = settings.group_padding,
 })
 
 volume_percent:subscribe("volume_change", function(env)

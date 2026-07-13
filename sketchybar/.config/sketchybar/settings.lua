@@ -18,15 +18,47 @@ local sizes = {
 	app = 14.0,
 }
 
+local widgets = {
+	calendar = {
+		update_freq = 30,
+	},
+	cpu = {
+		poll_seconds = 5.0,
+		label_width = 33,
+		thresholds = {
+			medium = 30,
+			high = 60,
+			critical = 80,
+		},
+	},
+	volume = {
+		label_width = 25,
+	},
+	battery = {
+		update_freq = 180,
+	},
+	keyboard = {
+		default_label = "??",
+		event_name = "input_change",
+		notification = "AppleSelectedInputSourcesChangedNotification",
+		layout_aliases = {
+			Russian = "RU",
+			RussianWin = "RU",
+			ABC = "EN",
+			["U.S."] = "EN",
+			US = "EN",
+		},
+	},
+}
+
 return {
 	ui = ui,
 	font_sizes = sizes,
 
 	paddings = 3,
-	group_paddings = 5,
+	group_padding = 5,
 
-	icons = "sf-symbols", -- alternatively available: NerdFont
-	-- icons = "NerdFont",
+	icons = "sf-symbols",
 
 	font = font,
 	label_font = {
@@ -34,17 +66,11 @@ return {
 		style = font.style_map["Bold"],
 		size = sizes.label_compact,
 	},
-
-	-- Alternatively, this is a font config for JetBrainsMono Nerd Font
-	-- font = {
-	--   text = "JetBrainsMono Nerd Font", -- Used for text
-	--   numbers = "JetBrainsMono Nerd Font", -- Used for numbers
-	--   style_map = {
-	--     ["Regular"] = "Regular",
-	--     ["Semibold"] = "Medium",
-	--     ["Bold"] = "SemiBold",
-	--     ["Heavy"] = "Bold",
-	--     ["Black"] = "ExtraBold",
-	--   },
-	-- },
+	binaries = {
+		aerospace = os.getenv("AEROSPACE_BIN") or "/opt/homebrew/bin/aerospace",
+	},
+	network = {
+		interface = os.getenv("SKETCHYBAR_NET_IFACE") or "en0",
+	},
+	widgets = widgets,
 }
