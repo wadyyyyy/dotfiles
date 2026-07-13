@@ -20,7 +20,7 @@ font-feature = -calt
 
 font-style = medium
 
-adjust-cell-height = 8
+adjust-cell-height = 10
 adjust-cell-width = 1
 
 mouse-hide-while-typing = true
