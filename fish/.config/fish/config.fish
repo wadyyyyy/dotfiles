@@ -35,12 +35,14 @@ abbr -a ssconf "nvim ~/.config/starship.toml"
 abbr -a bordersconf "nvim ~/.config/borders/bordersrc"
 abbr -a svimconf "nvim ~/.config/svim/blacklist"
 abbr -a ffconf "nvim ~/.config/fastfetch"
+abbr -a niriconf "nvim ~/.config/niri/"
 
 abbr -a cm chezmoi
 abbr -a ip "curl ipinfo.io"
 abbr -a ta "tmux a"
 abbr -a tn tmux
 abbr -a nvim-kick "env NVIM_APPNAME=nvim-kickstart nvim"
+abbr -a sp "sudo pacman -S"
 
 abbr -a lg lazygit
 abbr -a gs "git status -sb"
@@ -68,6 +70,7 @@ alias sexy "fastfetch --config ~/.config/fastfetch/custom.jsonc"
 alias ff "fastfetch --config ~/.config/fastfetch/apple.jsonc"
 abbr -a c clear
 alias cd z
+abbr -a yz yazi
 
 bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
 bind -M insert ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
