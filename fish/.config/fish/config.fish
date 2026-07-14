@@ -58,6 +58,8 @@ abbr -a gd "git diff"
 abbr -a gr "git remote -v"
 abbr -a gcl "git clone"
 
+abbr -a dps "docker ps"
+
 function cheat
     curl -s "https://cheat.sh/$argv"
 end
@@ -65,6 +67,7 @@ end
 alias sexy "fastfetch --config ~/.config/fastfetch/custom.jsonc"
 alias ff "fastfetch --config ~/.config/fastfetch/apple.jsonc"
 abbr -a c clear
+alias cd z
 
 bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
 bind -M insert ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
