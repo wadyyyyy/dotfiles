@@ -89,7 +89,7 @@ local icons = {
 	},
 }
 
-if settings.icons == "NerdFont" then
+if settings.icons ~= "sf-symbols" then
 	return icons.nerdfont
 end
 

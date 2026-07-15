@@ -2,23 +2,44 @@ local icons = require("icons")
 local colors = require("colors")
 local settings = require("settings")
 
-local battery = sbar.add("item", "widgets.battery", {
+local battery_label = sbar.add("item", "widgets.battery.label", {
+	position = "right",
+	icon = { drawing = false },
+	label = {
+		string = "??%",
+		font = settings.label_font,
+		color = colors.white,
+		align = "center",
+	},
+})
+
+local battery_icon = sbar.add("item", "widgets.battery.icon", {
 	position = "right",
 	icon = {
-		font = {
-			style = settings.font.style_map["Regular"],
-			size = settings.font_sizes.icon_large,
-		},
+		string = "BAT",
+		color = colors.blue,
+		font = settings.label_font,
+		align = "center",
 	},
-	label = { font = settings.label_font },
+	width = 20,
+	label = { drawing = false },
 	update_freq = settings.widgets.battery.update_freq,
 })
 
-battery:subscribe({ "routine", "power_source_change", "system_woke" }, function()
-	sbar.exec("pmset -g batt", function(batt_info)
-		local icon = "!"
-		local label = "?"
+sbar.add("bracket", "widgets.battery.bracket", {
+	battery_icon.name,
+	battery_label.name,
+}, {
+	background = colors.island,
+})
 
+sbar.add("item", "widgets.battery.padding", {
+	position = "right",
+	width = settings.group_padding,
+})
+
+battery_icon:subscribe({ "routine", "power_source_change", "system_woke" }, function()
+	sbar.exec("pmset -g batt", function(batt_info)
 		local found, _, charge = batt_info:find("(%d+)%%")
 		if found then
 			charge = tonumber(charge)
@@ -29,19 +50,12 @@ battery:subscribe({ "routine", "power_source_change", "system_woke" }, function(
 		local charging, _, _ = batt_info:find("AC Power")
 
 		if charging then
-			icon = icons.battery.charging
+			color = colors.green
 		else
-			if found and charge > 80 then
-				icon = icons.battery._100
-			elseif found and charge > 60 then
-				icon = icons.battery._75
-			elseif found and charge > 40 then
-				icon = icons.battery._50
-			elseif found and charge > 20 then
-				icon = icons.battery._25
-			else
-				icon = icons.battery._0
+			if charge < 20 then
 				color = colors.red
+			else
+				color = colors.blue
 			end
 		end
 
@@ -50,21 +64,15 @@ battery:subscribe({ "routine", "power_source_change", "system_woke" }, function(
 			lead = "0"
 		end
 
-		battery:set({
+		battery_icon:set({
 			icon = {
 				string = icon,
 				color = color,
 			},
+		})
+
+		battery_label:set({
 			label = { string = lead .. label },
 		})
 	end)
 end)
-
-sbar.add("bracket", "widgets.battery.bracket", { battery.name }, {
-	background = colors.island,
-})
-
-sbar.add("item", "widgets.battery.padding", {
-	position = "right",
-	width = settings.group_padding,
-})

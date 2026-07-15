@@ -8,9 +8,10 @@ sbar.bar({
 	padding_left = 1,
 	display = 1,
 	margin = 8,
-	y_offset = 6,
+	y_offset = 8,
 	corner_radius = 10,
 	border_width = 1,
 	border_color = colors.bar.border_color,
-	shadow = off,
+	position = "right",
+	blur_radius = colors.bar.blur,
 })

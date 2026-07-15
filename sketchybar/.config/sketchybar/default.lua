@@ -41,7 +41,7 @@ sbar.default({
 			corner_radius = settings.ui.item_corner_radius,
 			border_color = colors.popup.border,
 			color = colors.popup.bg,
-			shadow = { drawing = true },
+			shadow = { drawing = false },
 		},
 		blur_radius = 50,
 	},

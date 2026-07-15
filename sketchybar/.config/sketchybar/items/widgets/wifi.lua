@@ -9,10 +9,9 @@ local wifi = sbar.add("item", "widgets.wifi", {
 			style = settings.font.style_map["Bold"],
 			size = settings.font_sizes.icon_medium,
 		},
-		padding_left = 8,
-		padding_right = 8,
 	},
 	label = { drawing = false },
+	align = "center",
 })
 
 sbar.add("bracket", "widgets.wifi.bracket", {

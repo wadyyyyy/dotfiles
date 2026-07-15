@@ -1,5 +1,5 @@
 local colors = require("colors")
-local icons = require("icons")
+-- local icons = require("icons")
 local settings = require("settings")
 
 local volume_percent = sbar.add("item", "widgets.volume.percent", {
@@ -7,32 +7,23 @@ local volume_percent = sbar.add("item", "widgets.volume.percent", {
 	icon = { drawing = false },
 	label = {
 		string = "??%",
-		padding_left = -1,
 		font = settings.label_font,
+		color = colors.white,
 	},
+	width = 20,
+	align = "center",
 })
 
 local volume_icon = sbar.add("item", "widgets.volume.icon", {
 	position = "right",
-	padding_right = -1,
 	icon = {
-		string = icons.volume._100,
-		width = 0,
-		align = "left",
-		color = colors.grey,
-		font = {
-			style = settings.font.style_map["Regular"],
-			size = settings.font_sizes.icon,
-		},
+		string = "VOL",
+		color = colors.blue,
+		font = settings.label_font,
+		align = "center",
 	},
-	label = {
-		width = settings.widgets.volume.label_width,
-		align = "left",
-		font = {
-			style = settings.font.style_map["Regular"],
-			size = settings.font_sizes.label,
-		},
-	},
+	width = 20,
+	label = { drawing = false },
 })
 
 sbar.add("bracket", "widgets.volume.bracket", {
@@ -48,23 +39,30 @@ sbar.add("item", "widgets.volume.padding", {
 })
 
 volume_percent:subscribe("volume_change", function(env)
-	local volume = tonumber(env.INFO)
-	local icon = icons.volume._0
-	if volume > 60 then
-		icon = icons.volume._100
-	elseif volume > 30 then
-		icon = icons.volume._66
-	elseif volume > 10 then
-		icon = icons.volume._33
-	elseif volume > 0 then
-		icon = icons.volume._10
-	end
+	local volume = tonumber(env.INFO) or 0
+	-- local icon = icons.volume._0
+	-- if volume > 60 then
+	-- 	icon = icons.volume._100
+	-- elseif volume > 30 then
+	-- 	icon = icons.volume._66
+	-- elseif volume > 10 then
+	-- 	icon = icons.volume._33
+	-- elseif volume > 0 then
+	-- 	icon = icons.volume._10
+	-- end
 
 	local lead = ""
 	if volume < 10 then
 		lead = "0"
 	end
 
-	volume_icon:set({ label = icon })
-	volume_percent:set({ label = lead .. volume .. "%" })
+	-- volume_icon:set({
+	-- 	label = { string = icon },
+	-- 	width = 20,
+	-- 	align = "center",
+	-- })
+
+	volume_percent:set({
+		label = { string = lead .. volume .. "%" },
+	})
 end)

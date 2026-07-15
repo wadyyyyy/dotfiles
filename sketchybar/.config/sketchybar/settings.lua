@@ -1,7 +1,7 @@
 local font = require("helpers.default_font")
 
 local ui = {
-	bar_height = 32,
+	bar_height = 42,
 	item_height = 22,
 	item_corner_radius = 6,
 	item_border_width = 0,
@@ -32,7 +32,7 @@ local widgets = {
 		},
 	},
 	volume = {
-		label_width = 25,
+		-- label_width = 50,
 	},
 	battery = {
 		update_freq = 180,
@@ -57,6 +57,7 @@ return {
 
 	paddings = 3,
 	group_padding = 5,
+	edge_padding = 15,
 
 	icons = "sf-symbols",
 

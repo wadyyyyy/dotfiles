@@ -5,6 +5,8 @@ local app_icons = require("helpers.app_icons")
 local aerospace_bin = settings.binaries.aerospace
 local app_font = "sketchybar-app-font:Regular:" .. settings.font_sizes.app
 
+local MAX_INACTIVE_SLOTS = 10
+
 local function trim(value)
 	return value and value:gsub("^%s*(.-)%s*$", "%1") or value
 end
@@ -17,34 +19,49 @@ sbar.add("event", "aerospace_refresh")
 sbar.add("event", "aerospace_mode_change")
 
 local aerospace_workspace = sbar.add("item", "aerospace.ws", {
+	position = "left",
 	icon = {
 		font = settings.label_font,
-		padding_left = 10,
-		padding_right = 0,
 		color = colors.white,
+		align = "center",
 	},
 	label = { drawing = false },
-	padding_left = 1,
+	padding_left = settings.edge_padding,
 })
 
-local aerospace_apps = sbar.add("item", "aerospace.apps", {
+local aerospace_active = sbar.add("item", "aerospace.active", {
+	position = "left",
 	icon = {
 		font = app_font,
-		color = colors.white,
-		padding_right = 2,
-		drawing = false,
+		color = colors.blue,
+		align = "center",
 	},
-	label = {
-		font = app_font,
-		color = colors.grey,
-		padding_right = 10,
-		y_offset = -1,
-	},
-	padding_right = 1,
+	label = { drawing = false },
 })
 
-sbar.add("bracket", { aerospace_workspace.name, aerospace_apps.name }, {
-	background = colors.island,
+local inactive_slots = {}
+local bracket_members = { aerospace_workspace.name, aerospace_active.name }
+
+for i = 1, MAX_INACTIVE_SLOTS do
+	local slot = sbar.add("item", "aerospace.inactive." .. i, {
+		position = "left",
+		icon = { drawing = false },
+		label = {
+			font = app_font,
+			color = colors.grey,
+			align = "center",
+		},
+		drawing = false,
+	})
+	table.insert(inactive_slots, slot)
+	table.insert(bracket_members, slot.name)
+end
+
+sbar.add("bracket", "aerospace.bracket", bracket_members, {
+	background = {
+		color = colors.island,
+		corner_radius = settings.item_corner_radius,
+	},
 })
 
 local function render_workspace(workspace_id)
@@ -61,7 +78,7 @@ local function render_workspace(workspace_id)
 				focused_workspace = trim(focused_workspace)
 
 				local active_icon = ""
-				local inactive_icons = ""
+				local inactive_glyphs = {}
 				local seen_apps = {}
 
 				for app_name in string.gmatch(workspace_apps_output, "[^\r\n]+") do
@@ -69,48 +86,53 @@ local function render_workspace(workspace_id)
 					if normalized_app_name ~= "" and not seen_apps[normalized_app_name] then
 						seen_apps[normalized_app_name] = true
 						local glyph = app_icons[normalized_app_name] or app_icons.Default or "—"
+
 						if normalized_app_name == focused_app and focused_workspace == workspace_id then
 							active_icon = glyph
 						else
-							inactive_icons = inactive_icons .. glyph
+							table.insert(inactive_glyphs, glyph)
 						end
 					end
 				end
 
-				if active_icon == "" and inactive_icons == "" then
-					inactive_icons = " —"
+				if active_icon == "" and #inactive_glyphs == 0 then
+					table.insert(inactive_glyphs, "—")
+				end
+
+				for i, slot in ipairs(inactive_slots) do
+					local glyph = inactive_glyphs[i]
+					if glyph then
+						slot:set({
+							label = { string = glyph },
+							drawing = true,
+						})
+					else
+						slot:set({ drawing = false })
+					end
 				end
 
 				aerospace_exec("list-modes --current", function(mode_output)
 					local current_mode = trim(mode_output)
 					local workspace_label = workspace_id
-					local extra_padding = 0
+
 					if current_mode == "service" then
-						workspace_label = workspace_id .. "[S]"
-						extra_padding = 4
+						workspace_label = workspace_id .. "\n[S]"
 					end
 
 					aerospace_workspace:set({
-						icon = workspace_label,
-						padding_right = 1 + extra_padding,
+						icon = { string = workspace_label },
 					})
 
-					local icon_padding = (inactive_icons == "") and 10 or 2
-					if active_icon ~= "" then
-						aerospace_apps:set({
-							icon = { string = active_icon, drawing = true, padding_right = icon_padding },
-							label = { string = inactive_icons, drawing = inactive_icons ~= "" },
-						})
-						return
-					end
-
-					aerospace_apps:set({
-						icon = { drawing = false, padding_right = 2 },
-						label = { string = inactive_icons, drawing = true },
+					aerospace_active:set({
+						icon = {
+							string = active_icon,
+							drawing = (active_icon ~= ""),
+						},
 					})
 				end)
 			end)
-		end)
+		end
+	)
 end
 
 local function refresh_workspace(env)

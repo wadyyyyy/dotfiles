@@ -16,10 +16,8 @@ local keyboard = sbar.add("item", "widgets.keyboard", {
 	label = {
 		string = keyboard_settings.default_label,
 		font = settings.label_font,
-		align = "left",
-		padding_left = 6,
-		padding_right = 6,
-		width = "dynamic",
+		align = "center",
+		width = 20,
 	},
 })
 
@@ -29,7 +27,7 @@ sbar.add("bracket", "widgets.keyboard.bracket", { keyboard.name }, {
 
 sbar.add("item", "widgets.keyboard.padding", {
 	position = "right",
-	width = settings.group_padding,
+	height = settings.group_padding,
 })
 
 local layout_script = [[

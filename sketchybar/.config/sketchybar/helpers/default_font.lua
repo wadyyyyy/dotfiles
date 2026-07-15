@@ -1,9 +1,8 @@
 return {
-	-- "SF Pro" ???
 	-- text = "FiraCode Nerd Font Propo",
 	-- numbers = "FiraCode Nerd Font Propo",
-	text = "SF Pro",
-	numbers = "SF Pro",
+	text = "SF Pro Rounded",
+	numbers = "SF Pro Rounded",
 	style_map = {
 		["Regular"] = "Regular",
 		["Semibold"] = "Semibold",

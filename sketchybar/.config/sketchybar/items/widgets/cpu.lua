@@ -9,27 +9,28 @@ sbar.exec(
 	)
 )
 
-local cpu = sbar.add("item", "widgets.cpu", {
+local cpu_label = sbar.add("item", "widgets.cpu.label", {
 	position = "right",
-	background = {
-		height = settings.ui.item_height,
-		color = { alpha = 0 },
-		border_color = { alpha = 0 },
-		drawing = true,
-	},
-	icon = {
-		string = icons.cpu,
-		color = colors.blue,
-		padding_right = settings.paddings + 3,
-	},
+	icon = { drawing = false },
 	label = {
-		string = "cpu ??%",
+		string = "??%",
 		font = settings.label_font,
-		align = "left",
-		padding_left = 0,
-		width = settings.widgets.cpu.label_width,
+		color = colors.white,
 	},
-	padding_right = settings.paddings,
+	width = 20,
+	align = "center",
+})
+
+local cpu_icon = sbar.add("item", "widgets.cpu.icon", {
+	position = "right",
+	icon = {
+		string = "CPU",
+		color = colors.blue,
+		font = settings.label_font,
+		align = "center",
+	},
+	width = 20,
+	label = { drawing = false },
 })
 
 local function get_cpu_color(load)
@@ -46,20 +47,26 @@ local function get_cpu_color(load)
 	return colors.blue
 end
 
-cpu:subscribe("cpu_update", function(env)
-	local load = tonumber(env.total_load)
+cpu_icon:subscribe("cpu_update", function(env)
+	local load = tonumber(env.total_load) or 0
 
-	cpu:set({
+	cpu_icon:set({
 		icon = { color = get_cpu_color(load) },
-		label = env.total_load .. "%",
+	})
+
+	cpu_label:set({
+		label = { string = string.format("%.0f%%", load) }, -- Округляем для компактности в вертикальном баре
 	})
 end)
 
-sbar.add("bracket", "widgets.cpu.bracket", { cpu.name }, {
+sbar.add("bracket", "widgets.cpu.bracket", {
+	cpu_icon.name,
+	cpu_label.name,
+}, {
 	background = colors.island,
 })
 
 sbar.add("item", "widgets.cpu.padding", {
 	position = "right",
-	width = settings.group_padding,
+	height = settings.group_padding,
 })
