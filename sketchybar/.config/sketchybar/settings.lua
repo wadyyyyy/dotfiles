@@ -2,10 +2,6 @@ local font = require("helpers.default_font")
 
 local ui = {
 	bar_height = 42,
-	item_height = 22,
-	item_corner_radius = 6,
-	item_border_width = 0,
-	item_image_corner_radius = 8,
 }
 
 local sizes = {

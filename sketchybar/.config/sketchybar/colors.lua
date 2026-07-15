@@ -1,15 +1,17 @@
 local settings = require("settings")
 
 local colors = {
-	black = 0xff181819,
-	white = 0xffe2e2e3,
-	red = 0xfffc5d7c,
-	green = 0xff9ed072,
-	blue = 0xff76cce0,
-	yellow = 0xffe7c664,
-	orange = 0xfff39660,
-	magenta = 0xffb39df3,
-	grey = 0xff7f8490,
+	black = 0xff1d2021,
+	white = 0xffd4be98,
+
+	red = 0xffea6962,
+	green = 0xffa9b665,
+	blue = 0xff7daea3,
+	yellow = 0xffd8a657,
+	orange = 0xffe78a4e,
+	magenta = 0xffd3869b,
+	grey = 0xff928374,
+
 	transparent = 0x00000000,
 
 	bar = {
@@ -17,13 +19,6 @@ local colors = {
 		border_color = 0x35e2e2e3,
 		blur = 12,
 	},
-	popup = {
-		bg = 0x00000000,
-		border = 0xff7f8490,
-	},
-	item_container_bg = 0x10e2e2e3,
-	-- item_container_bg = 0x00e2e2e3,
-	item_container_border_bg = 0xffe2e2e3,
 
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then
@@ -31,14 +26,6 @@ local colors = {
 		end
 		return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 	end,
-}
-
-colors.island = {
-	color = colors.item_container_bg,
-	height = settings.ui.item_height,
-	corner_radius = settings.ui.item_corner_radius,
-	border_width = settings.ui.item_border_width,
-	border_color = colors.item_container_border_bg,
 }
 
 return colors

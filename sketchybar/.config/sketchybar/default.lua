@@ -35,16 +35,6 @@ sbar.default({
 			border_width = 2,
 		},
 	},
-	popup = {
-		background = {
-			border_width = settings.ui.item_border_width,
-			corner_radius = settings.ui.item_corner_radius,
-			border_color = colors.popup.border,
-			color = colors.popup.bg,
-			shadow = { drawing = false },
-		},
-		blur_radius = 50,
-	},
 	padding_left = 5,
 	padding_right = 5,
 	scroll_texts = true,

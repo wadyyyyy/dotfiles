@@ -53,7 +53,7 @@ battery_icon:subscribe({ "routine", "power_source_change", "system_woke" }, func
 			color = colors.green
 		else
 			if charge < 20 then
-				color = colors.red
+				color = colors.orange
 			else
 				color = colors.blue
 			end
@@ -66,7 +66,7 @@ battery_icon:subscribe({ "routine", "power_source_change", "system_woke" }, func
 
 		battery_icon:set({
 			icon = {
-				string = icon,
+				string = charging and "+BAT" or "BAT",
 				color = color,
 			},
 		})
