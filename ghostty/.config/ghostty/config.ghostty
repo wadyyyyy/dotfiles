@@ -20,8 +20,8 @@ font-feature = -calt
 
 font-style = medium
 
-adjust-cell-height = 10
-adjust-cell-width = 1
+adjust-cell-height = 12
+adjust-cell-width = 2
 
 mouse-hide-while-typing = true
 macos-option-as-alt = true
