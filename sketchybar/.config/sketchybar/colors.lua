@@ -20,9 +20,6 @@ local colors = {
 		blur = 12,
 	},
 
-	bg1 = 0x10e2e2e3,
-	bg2 = 0x40e2e2e3,
-
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then
 			return color

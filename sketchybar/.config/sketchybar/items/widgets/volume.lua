@@ -9,9 +9,11 @@ local volume_percent = sbar.add("item", "widgets.volume.percent", {
 		string = "??%",
 		font = settings.label_font,
 		color = colors.white,
+		align = "center",
 	},
-	width = 20,
-	align = "center",
+	width = settings.ui.label.width,
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 local volume_icon = sbar.add("item", "widgets.volume.icon", {
@@ -22,15 +24,9 @@ local volume_icon = sbar.add("item", "widgets.volume.icon", {
 		font = settings.label_font,
 		align = "center",
 	},
-	width = 20,
 	label = { drawing = false },
-})
-
-sbar.add("bracket", "widgets.volume.bracket", {
-	volume_icon.name,
-	volume_percent.name,
-}, {
-	background = colors.island,
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 sbar.add("item", "widgets.volume.padding", {

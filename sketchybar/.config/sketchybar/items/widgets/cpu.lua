@@ -15,9 +15,12 @@ local cpu_label = sbar.add("item", "widgets.cpu.label", {
 		string = "??%",
 		font = settings.label_font,
 		color = colors.white,
+		align = "center",
 	},
-	width = 20,
-	align = "center",
+	width = settings.ui.label.width,
+
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 local cpu_icon = sbar.add("item", "widgets.cpu.icon", {
@@ -28,12 +31,21 @@ local cpu_icon = sbar.add("item", "widgets.cpu.icon", {
 		font = {
 			family = settings.font.text,
 			style = settings.font.style_map["Bold"],
-			size = settings.sizes.label_small,
+			size = settings.sizes.label_medium,
 		},
 		align = "center",
 	},
-	width = 20,
+	width = settings.ui.icon.width,
+
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
+
 	label = { drawing = false },
+})
+
+sbar.add("item", "widgets.cpu.padding", {
+	position = "right",
+	width = settings.paddings.group_padding,
 })
 
 local function get_cpu_color(load)
@@ -61,15 +73,3 @@ cpu_icon:subscribe("cpu_update", function(env)
 		label = { string = string.format("%.0f%%", load) },
 	})
 end)
-
-sbar.add("bracket", "widgets.cpu.bracket", {
-	cpu_icon.name,
-	cpu_label.name,
-}, {
-	background = colors.island,
-})
-
-sbar.add("item", "widgets.cpu.padding", {
-	position = "right",
-	width = settings.paddings.group_padding,
-})

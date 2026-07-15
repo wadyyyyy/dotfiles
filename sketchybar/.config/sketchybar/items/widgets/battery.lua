@@ -10,6 +10,9 @@ local battery_label = sbar.add("item", "widgets.battery.label", {
 		color = colors.white,
 		align = "center",
 	},
+
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 local battery_icon = sbar.add("item", "widgets.battery.icon", {
@@ -20,16 +23,13 @@ local battery_icon = sbar.add("item", "widgets.battery.icon", {
 		font = settings.label_font,
 		align = "center",
 	},
-	width = 20,
+	width = settings.ui.icon.width,
 	label = { drawing = false },
-	update_freq = settings.widgets.battery.update_freq,
-})
 
-sbar.add("bracket", "widgets.battery.bracket", {
-	battery_icon.name,
-	battery_label.name,
-}, {
-	background = colors.island,
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
+
+	update_freq = settings.widgets.battery.update_freq,
 })
 
 sbar.add("item", "widgets.battery.padding", {

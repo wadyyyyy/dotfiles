@@ -1,16 +1,23 @@
 local settings = require("settings")
 local colors = require("colors")
 
+local cal_font = {
+	family = settings.font.text,
+	style = settings.font.style_map["Bold"],
+	size = settings.sizes.label_small,
+}
+
 local cal_time = sbar.add("item", "widgets.calendar.time", {
 	position = "right",
 	icon = { drawing = false },
 	label = {
 		string = "??:??",
 		color = colors.white,
-		font = settings.label_font,
+		font = cal_font,
 		align = "center",
 	},
-	padding_right = settings.paddings.edge_padding,
+	padding_right = settings.paddings.edge_padding + settings.paddings.paddings,
+	padding_left = settings.paddings.paddings,
 })
 
 local cal_date = sbar.add("item", "widgets.calendar.date", {
@@ -19,17 +26,14 @@ local cal_date = sbar.add("item", "widgets.calendar.date", {
 	label = {
 		string = "??/??",
 		color = colors.white,
-		font = settings.label_font,
+		font = cal_font,
 		align = "center",
 	},
-	update_freq = settings.widgets.calendar.update_freq,
-})
 
-sbar.add("bracket", "widgets.calendar.bracket", {
-	cal_date.name,
-	cal_time.name,
-}, {
-	background = colors.island,
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
+
+	update_freq = settings.widgets.calendar.update_freq,
 })
 
 sbar.add("item", "widgets.calendar.padding", {

@@ -1,17 +1,42 @@
-local font = require("helpers.default_font")
+local font = {
+	text = "SF Pro Rounded",
+	numbers = "SF Pro Rounded",
+	style_map = {
+		["Regular"] = "Regular",
+		["Semibold"] = "Semibold",
+		["Bold"] = "Bold",
+		["Heavy"] = "Heavy",
+		["Black"] = "Black",
+	},
+}
 
 local ui = {
 	bar_height = 42,
-	item_height = 22,
-	item_corner_radius = 6,
-	item_border_width = 0,
-	item_image_corner_radius = 8,
+	background = {
+		border_width = 1,
+		corner_radius = 10,
+
+		image = {
+			border_width = 1,
+			corner_radius = 25,
+		},
+	},
+	image = {
+		corner_radius = 25,
+		border_width = 1,
+	},
+	icon = {
+		width = 20,
+	},
+	label = {
+		width = 20,
+	},
 }
 
 local paddings = {
-	paddings = 3,
-	group_padding = 5,
-	edge_padding = 15,
+	paddings = 5,
+	group_padding = 6,
+	edge_padding = 12,
 }
 
 local sizes = {
@@ -19,7 +44,7 @@ local sizes = {
 	icon_medium = 14.0,
 	icon_large = 16.0,
 
-	label_small = 10.0,
+	label_small = 11.0,
 	label_medium = 12.0,
 	label_large = 13.0,
 }
@@ -39,7 +64,7 @@ local widgets = {
 	},
 	volume = {},
 	battery = {
-		update_freq = 180,
+		update_freq = 120,
 	},
 }
 
@@ -63,4 +88,6 @@ return {
 	network = {
 		interface = os.getenv("SKETCHYBAR_NET_IFACE") or "en0",
 	},
+
+	scroll_texts = true,
 }

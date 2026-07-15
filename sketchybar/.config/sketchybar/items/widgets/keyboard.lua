@@ -29,12 +29,11 @@ local keyboard = sbar.add("item", "widgets.keyboard", {
 		string = keyboard_settings.default_label,
 		font = settings.label_font,
 		align = "center",
-		width = 20,
+		width = settings.ui.label.width,
+		color = colors.white,
 	},
-})
-
-sbar.add("bracket", "widgets.keyboard.bracket", { keyboard.name }, {
-	background = colors.island,
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 sbar.add("item", "widgets.keyboard.padding", {

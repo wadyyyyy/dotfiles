@@ -28,7 +28,8 @@ local aerospace_workspace = sbar.add("item", "aerospace.ws", {
 		align = "center",
 	},
 	label = { drawing = false },
-	padding_left = settings.paddings.edge_padding,
+	padding_left = settings.paddings.edge_padding + settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 local aerospace_active = sbar.add("item", "aerospace.active", {
@@ -39,10 +40,12 @@ local aerospace_active = sbar.add("item", "aerospace.active", {
 		align = "center",
 	},
 	label = { drawing = false },
+
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
 })
 
 local inactive_slots = {}
-local bracket_members = { aerospace_workspace.name, aerospace_active.name }
 
 for i = 1, MAX_INACTIVE_SLOTS do
 	local slot = sbar.add("item", "aerospace.inactive." .. i, {
@@ -54,17 +57,11 @@ for i = 1, MAX_INACTIVE_SLOTS do
 			align = "center",
 		},
 		drawing = false,
+		padding_left = settings.paddings.paddings,
+		padding_right = settings.paddings.paddings,
 	})
 	table.insert(inactive_slots, slot)
-	table.insert(bracket_members, slot.name)
 end
-
-sbar.add("bracket", "aerospace.bracket", bracket_members, {
-	background = {
-		color = colors.island,
-		corner_radius = settings.ui.item_corner_radius,
-	},
-})
 
 local function render_workspace(workspace_id)
 	if not workspace_id or workspace_id == "" then

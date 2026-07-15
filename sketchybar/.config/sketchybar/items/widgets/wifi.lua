@@ -9,15 +9,12 @@ local wifi = sbar.add("item", "widgets.wifi", {
 			style = settings.font.style_map["Bold"],
 			size = settings.sizes.icon_medium,
 		},
+		align = "center",
 	},
-	label = { drawing = false },
-	align = "center",
-})
 
-sbar.add("bracket", "widgets.wifi.bracket", {
-	wifi.name,
-}, {
-	background = colors.island,
+	padding_left = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings,
+	label = { drawing = false },
 })
 
 sbar.add("item", "widgets.wifi.padding", {
