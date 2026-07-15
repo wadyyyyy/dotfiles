@@ -34,7 +34,7 @@ sbar.add("bracket", "widgets.battery.bracket", {
 
 sbar.add("item", "widgets.battery.padding", {
 	position = "right",
-	width = settings.group_padding,
+	width = settings.paddings.group_padding,
 })
 
 battery_icon:subscribe({ "routine", "power_source_change", "system_woke" }, function()

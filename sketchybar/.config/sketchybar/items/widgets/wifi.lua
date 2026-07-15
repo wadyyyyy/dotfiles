@@ -7,7 +7,7 @@ local wifi = sbar.add("item", "widgets.wifi", {
 	icon = {
 		font = {
 			style = settings.font.style_map["Bold"],
-			size = settings.font_sizes.icon_medium,
+			size = settings.sizes.icon_medium,
 		},
 	},
 	label = { drawing = false },
@@ -22,7 +22,7 @@ sbar.add("bracket", "widgets.wifi.bracket", {
 
 sbar.add("item", "widgets.wifi.padding", {
 	position = "right",
-	width = settings.group_padding,
+	width = settings.paddings.group_padding,
 })
 
 local network_script = [[

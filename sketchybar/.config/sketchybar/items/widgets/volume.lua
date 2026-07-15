@@ -35,7 +35,7 @@ sbar.add("bracket", "widgets.volume.bracket", {
 
 sbar.add("item", "widgets.volume.padding", {
 	position = "right",
-	width = settings.group_padding,
+	width = settings.paddings.group_padding,
 })
 
 volume_percent:subscribe("volume_change", function(env)

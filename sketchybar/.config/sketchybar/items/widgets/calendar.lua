@@ -34,7 +34,7 @@ sbar.add("bracket", "widgets.calendar.bracket", {
 
 sbar.add("item", "widgets.calendar.padding", {
 	position = "right",
-	width = settings.group_padding,
+	width = settings.paddings.group_padding,
 })
 
 cal_date:subscribe({ "forced", "routine", "system_woke" }, function(env)

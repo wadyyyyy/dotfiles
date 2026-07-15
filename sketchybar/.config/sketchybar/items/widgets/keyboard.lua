@@ -39,7 +39,7 @@ sbar.add("bracket", "widgets.keyboard.bracket", { keyboard.name }, {
 
 sbar.add("item", "widgets.keyboard.padding", {
 	position = "right",
-	height = settings.group_padding,
+	width = settings.paddings.group_padding,
 })
 
 local layout_script = [[

@@ -7,22 +7,22 @@ sbar.default({
 		font = {
 			family = settings.font.text,
 			style = settings.font.style_map["Bold"],
-			size = settings.font_sizes.icon,
+			size = settings.sizes.icon_small,
 		},
 		color = colors.white,
-		padding_left = settings.paddings,
-		padding_right = settings.paddings,
+		padding_left = settings.paddings.paddings,
+		padding_right = settings.paddings.paddings,
 		background = { image = { corner_radius = settings.ui.item_corner_radius } },
 	},
 	label = {
 		font = {
 			family = settings.font.text,
 			style = settings.font.style_map["Semibold"],
-			size = settings.font_sizes.label,
+			size = settings.sizes.label_large,
 		},
 		color = colors.white,
-		padding_left = settings.paddings,
-		padding_right = settings.paddings,
+		padding_left = settings.paddings.paddings,
+		padding_right = settings.paddings.paddings,
 	},
 	background = {
 		height = settings.ui.item_height,

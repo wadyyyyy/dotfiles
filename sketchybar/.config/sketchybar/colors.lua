@@ -20,12 +20,23 @@ local colors = {
 		blur = 12,
 	},
 
+	bg1 = 0x10e2e2e3,
+	bg2 = 0x40e2e2e3,
+
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then
 			return color
 		end
 		return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 	end,
+}
+
+colors.island = {
+	color = colors.bg1,
+	height = settings.ui.item_height,
+	corner_radius = settings.ui.item_corner_radius,
+	border_width = settings.ui.item_border_width,
+	border_color = colors.bg2,
 }
 
 return colors

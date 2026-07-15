@@ -62,7 +62,7 @@ end
 sbar.add("bracket", "aerospace.bracket", bracket_members, {
 	background = {
 		color = colors.island,
-		corner_radius = settings.item_corner_radius,
+		corner_radius = settings.ui.item_corner_radius,
 	},
 })
 

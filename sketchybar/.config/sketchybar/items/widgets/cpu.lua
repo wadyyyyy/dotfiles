@@ -71,5 +71,5 @@ sbar.add("bracket", "widgets.cpu.bracket", {
 
 sbar.add("item", "widgets.cpu.padding", {
 	position = "right",
-	height = settings.group_padding,
+	width = settings.paddings.group_padding,
 })
