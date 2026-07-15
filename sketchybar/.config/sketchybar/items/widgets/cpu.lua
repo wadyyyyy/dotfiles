@@ -1,4 +1,3 @@
-local icons = require("icons")
 local colors = require("colors")
 local settings = require("settings")
 
@@ -26,7 +25,11 @@ local cpu_icon = sbar.add("item", "widgets.cpu.icon", {
 	icon = {
 		string = "CPU",
 		color = colors.blue,
-		font = settings.label_font,
+		font = {
+			family = settings.font.text,
+			style = settings.font.style_map["Bold"],
+			size = settings.sizes.label_small,
+		},
 		align = "center",
 	},
 	width = 20,
@@ -55,7 +58,7 @@ cpu_icon:subscribe("cpu_update", function(env)
 	})
 
 	cpu_label:set({
-		label = { string = string.format("%.0f%%", load) }, -- Округляем для компактности в вертикальном баре
+		label = { string = string.format("%.0f%%", load) },
 	})
 end)
 

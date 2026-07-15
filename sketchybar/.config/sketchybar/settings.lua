@@ -4,19 +4,25 @@ local ui = {
 	bar_height = 42,
 }
 
+local paddings = {
+	paddings = 3,
+	group_padding = 5,
+	edge_padding = 15,
+}
+
 local sizes = {
-	icon = 13.0,
+	icon_small = 13.0,
 	icon_medium = 14.0,
 	icon_large = 16.0,
-	label = 13.0,
-	label_compact = 12.0,
-	label_small = 9.0,
-	app = 14.0,
+
+	label_small = 10.0,
+	label_medium = 12.0,
+	label_large = 13.0,
 }
 
 local widgets = {
 	calendar = {
-		update_freq = 30,
+		update_freq = 15,
 	},
 	cpu = {
 		poll_seconds = 5.0,
@@ -27,47 +33,30 @@ local widgets = {
 			critical = 80,
 		},
 	},
-	volume = {
-		-- label_width = 50,
-	},
+	volume = {},
 	battery = {
 		update_freq = 180,
-	},
-	keyboard = {
-		default_label = "??",
-		event_name = "input_change",
-		notification = "AppleSelectedInputSourcesChangedNotification",
-		layout_aliases = {
-			Russian = "RU",
-			RussianWin = "RU",
-			ABC = "EN",
-			["U.S."] = "EN",
-			US = "EN",
-		},
 	},
 }
 
 return {
+	widgets = widgets,
 	ui = ui,
-	font_sizes = sizes,
-
-	paddings = 3,
-	group_padding = 5,
-	edge_padding = 15,
-
+	sizes = sizes,
+	paddings = paddings,
 	icons = "sf-symbols",
-
 	font = font,
+
 	label_font = {
 		family = font.text,
 		style = font.style_map["Bold"],
-		size = sizes.label_compact,
+		size = sizes.label_medium,
 	},
+
 	binaries = {
 		aerospace = os.getenv("AEROSPACE_BIN") or "/opt/homebrew/bin/aerospace",
 	},
 	network = {
 		interface = os.getenv("SKETCHYBAR_NET_IFACE") or "en0",
 	},
-	widgets = widgets,
 }

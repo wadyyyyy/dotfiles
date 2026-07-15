@@ -3,9 +3,9 @@ local settings = require("settings")
 local app_icons = require("helpers.app_icons")
 
 local aerospace_bin = settings.binaries.aerospace
-local app_font_large = "sketchybar-app-font:Regular:" .. settings.font_sizes.icon_large
-local app_font_medium = "sketchybar-app-font:Regular:" .. settings.font_sizes.icon_medium
-local app_font_small = "sketchybar-app-font:Regular:" .. settings.font_sizes.icon
+local app_icon_size_large = "sketchybar-app-font:Regular:" .. settings.sizes.icon_large
+local app_icon_size_medium = "sketchybar-app-font:Regular:" .. settings.sizes.icon_medium
+local app_icon_size_small = "sketchybar-app-font:Regular:" .. settings.sizes.icon_small
 
 local MAX_INACTIVE_SLOTS = 10
 
@@ -28,13 +28,13 @@ local aerospace_workspace = sbar.add("item", "aerospace.ws", {
 		align = "center",
 	},
 	label = { drawing = false },
-	padding_left = settings.edge_padding,
+	padding_left = settings.paddings.edge_padding,
 })
 
 local aerospace_active = sbar.add("item", "aerospace.active", {
 	position = "left",
 	icon = {
-		font = app_font_medium,
+		font = app_icon_size_medium,
 		color = colors.blue,
 		align = "center",
 	},
@@ -49,7 +49,7 @@ for i = 1, MAX_INACTIVE_SLOTS do
 		position = "left",
 		icon = { drawing = false },
 		label = {
-			font = app_font_small,
+			font = app_icon_size_small,
 			color = colors.grey,
 			align = "center",
 		},

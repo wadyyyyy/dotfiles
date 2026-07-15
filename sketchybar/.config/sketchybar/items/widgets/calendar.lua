@@ -10,7 +10,7 @@ local cal_time = sbar.add("item", "widgets.calendar.time", {
 		font = settings.label_font,
 		align = "center",
 	},
-	padding_right = settings.edge_padding,
+	padding_right = settings.paddings.edge_padding,
 })
 
 local cal_date = sbar.add("item", "widgets.calendar.date", {

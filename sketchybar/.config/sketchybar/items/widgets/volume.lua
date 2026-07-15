@@ -40,27 +40,11 @@ sbar.add("item", "widgets.volume.padding", {
 
 volume_percent:subscribe("volume_change", function(env)
 	local volume = tonumber(env.INFO) or 0
-	-- local icon = icons.volume._0
-	-- if volume > 60 then
-	-- 	icon = icons.volume._100
-	-- elseif volume > 30 then
-	-- 	icon = icons.volume._66
-	-- elseif volume > 10 then
-	-- 	icon = icons.volume._33
-	-- elseif volume > 0 then
-	-- 	icon = icons.volume._10
-	-- end
 
 	local lead = ""
 	if volume < 10 then
 		lead = "0"
 	end
-
-	-- volume_icon:set({
-	-- 	label = { string = icon },
-	-- 	width = 20,
-	-- 	align = "center",
-	-- })
 
 	volume_percent:set({
 		label = { string = lead .. volume .. "%" },

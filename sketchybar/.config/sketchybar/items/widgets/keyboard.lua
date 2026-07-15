@@ -1,6 +1,18 @@
 local colors = require("colors")
 local settings = require("settings")
-local keyboard_settings = settings.widgets.keyboard
+
+local keyboard_settings = {
+	default_label = "??",
+	event_name = "input_change",
+	notification = "AppleSelectedInputSourcesChangedNotification",
+	layout_aliases = {
+		Russian = "RU",
+		RussianWin = "RU",
+		ABC = "EN",
+		["U.S."] = "EN",
+		US = "EN",
+	},
+}
 
 os.execute(
 	string.format(
