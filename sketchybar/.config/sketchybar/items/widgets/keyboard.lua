@@ -32,6 +32,16 @@ local keyboard = sbar.add("item", "widgets.keyboard", {
 		width = settings.ui.label.width,
 		color = colors.white,
 	},
+
+	-- background = {
+	-- 	color = colors.container.bg,
+	-- 	border_color = colors.container.border_color,
+	-- 	border_width = settings.ui.container.border_width,
+	-- 	corner_radius = settings.ui.container.corner_radius,
+	-- 	height = settings.ui.container.height,
+	-- 	width = settings.ui.container.width,
+	-- }, -- test?
+
 	padding_left = settings.paddings.paddings,
 	padding_right = settings.paddings.paddings,
 })

@@ -14,12 +14,19 @@ local ui = {
 	bar_height = 42,
 	background = {
 		border_width = 1,
-		corner_radius = 10,
+		-- corner_radius = 9,
+		corner_radius = 0,
 
 		image = {
 			border_width = 1,
-			corner_radius = 25,
+			corner_radius = 24,
 		},
+	},
+	container = {
+		height = 38,
+		width = 38,
+		corner_radius = 15,
+		border_width = 1,
 	},
 	image = {
 		corner_radius = 25,

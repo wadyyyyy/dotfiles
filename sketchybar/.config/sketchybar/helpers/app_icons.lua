@@ -214,6 +214,7 @@ return {
 	["Skim"] = ":pdf:",
 	["zathura"] = ":pdf:",
 	["Zen"] = ":zen_browser:",
+	["ZenNotes"] = ":notes:",
 	["Aperçu"] = ":pdf:",
 	["PDF Expert"] = ":pdf_expert:",
 	["Pearcleaner"] = ":pearcleaner:",

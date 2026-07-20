@@ -4,7 +4,8 @@ local colors = {
 	black = 0xff1d2021,
 	white = 0xffd4be98,
 
-	red = 0xffea6962,
+	-- red = 0xffea6962,
+	red = 0xfffb4834,
 	green = 0xffa9b665,
 	blue = 0xff7daea3,
 	yellow = 0xffd8a657,
@@ -19,6 +20,10 @@ local colors = {
 		border_color = 0x35e2e2e3,
 		blur = 12,
 	},
+	container = {
+		bg = 0xff000000,
+		border_color = 0xffffffff,
+	},
 
 	with_alpha = function(color, alpha)
 		if alpha > 1.0 or alpha < 0.0 then
@@ -26,14 +31,6 @@ local colors = {
 		end
 		return (color & 0x00ffffff) | (math.floor(alpha * 255.0) << 24)
 	end,
-}
-
-colors.island = {
-	color = colors.bg1,
-	height = settings.ui.item_height,
-	corner_radius = settings.ui.item_corner_radius,
-	border_width = settings.ui.item_border_width,
-	border_color = colors.bg2,
 }
 
 return colors

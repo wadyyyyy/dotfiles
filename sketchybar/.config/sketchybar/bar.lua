@@ -13,5 +13,6 @@ sbar.bar({
 	y_offset = 8,
 	corner_radius = settings.ui.background.corner_radius,
 	display = 1,
-	position = "right",
+	position = "top",
+	topmost = "window",
 })
