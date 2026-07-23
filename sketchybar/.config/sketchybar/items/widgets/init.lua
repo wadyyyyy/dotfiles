@@ -13,4 +13,5 @@ separator("widgets.separator.2")
 require("items.widgets.keyboard")
 require("items.widgets.wifi")
 
-require("items.widgets.aerospace")
+-- require("items.widgets.aerospace")
+require("items.widgets.yabai")

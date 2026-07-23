@@ -288,6 +288,7 @@ return {
 	["Twitter"] = ":twitter:",
 	["UTM"] = ":utm:",
 	["MacVim"] = ":vim:",
+	["Happ"] = "󰖂",
 	["Vim"] = ":vim:",
 	["VimR"] = ":vim:",
 	["Vivaldi"] = ":vivaldi:",

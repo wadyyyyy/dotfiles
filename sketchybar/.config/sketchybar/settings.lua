@@ -14,8 +14,8 @@ local ui = {
 	bar_height = 42,
 	background = {
 		border_width = 1,
-		-- corner_radius = 9,
-		corner_radius = 0,
+		corner_radius = 10,
+		-- corner_radius = 0,
 
 		image = {
 			border_width = 1,
