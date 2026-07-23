@@ -1,0 +1,121 @@
+# focus window
+alt - h : yabai -m window --focus west
+alt - j : yabai -m window --focus south
+alt - k : yabai -m window --focus north
+alt - l : yabai -m window --focus east
+alt - tab : yabai -m window --focus recent
+
+# move windows 
+shift + alt - h : yabai -m window --warp west
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+shift + alt - l : yabai -m window --warp east
+
+# swap windows without changing tree depth
+shift + cmd - h : yabai -m window --swap west
+shift + cmd - j : yabai -m window --swap south
+shift + cmd - k : yabai -m window --swap north
+shift + cmd - l : yabai -m window --swap east
+
+# stack management
+
+# Переключение layout текущего спейса (BSP / STACK)
+alt - 0x2C : yabai -m space --layout "$(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')"
+
+# Перемещение окна вперед / назад внутри стака (Shift + Alt + [ / ])
+shift + alt - 0x1E : yabai -m window --swap stack.next  # 0x1E = ]
+shift + alt - 0x21 : yabai -m window --swap stack.prev  # 0x21 = [
+
+# Навигация внутри стака (Alt + [ / Alt + ])
+alt - 0x1E : yabai -m window --focus stack.next  # 0x1E = ]
+alt - 0x21 : yabai -m window --focus stack.prev  # 0x21 = [
+
+# Стекнуть текущее окно с соседним по направлению (Alt + Ctrl + Shift + H/J/K/L)
+ctrl + shift + alt - h : yabai -m window --stack west
+ctrl + shift + alt - j : yabai -m window --stack south
+ctrl + shift + alt - k : yabai -m window --stack north
+ctrl + shift + alt - l : yabai -m window --stack east
+
+# Swap / Move spaces (меняем текущий спейс местами)
+
+# Поменять текущий спейс со следующим / предыдущим
+ctrl + alt - n : yabai -m space --swap next && sketchybar --trigger yabai_refresh
+ctrl + alt - p : yabai -m space --swap prev && sketchybar --trigger yabai_refresh
+
+# Поменять текущий спейс с конкретным номером (1-9)
+ctrl + alt - 1 : yabai -m space --swap 1
+ctrl + alt - 2 : yabai -m space --swap 2
+ctrl + alt - 3 : yabai -m space --swap 3
+ctrl + alt - 4 : yabai -m space --swap 4
+ctrl + alt - 5 : yabai -m space --swap 5
+ctrl + alt - 6 : yabai -m space --swap 6
+ctrl + alt - 7 : yabai -m space --swap 7
+ctrl + alt - 8 : yabai -m space --swap 8
+ctrl + alt - 9 : yabai -m space --swap 9
+
+# resize
+ctrl + alt - h : yabai -m window --resize left:-40:0 || yabai -m window --resize right:-40:0
+ctrl + alt - j : yabai -m window --resize bottom:0:40 || yabai -m window --resize top:0:40
+ctrl + alt - k : yabai -m window --resize top:0:-40 || yabai -m window --resize bottom:0:-40
+ctrl + alt - l : yabai -m window --resize right:40:0 || yabai -m window --resize left:40:0
+
+# workspaces / spaces
+
+# focus next / previous space
+alt - n : yabai -m space --focus next
+alt - p : yabai -m space --focus prev
+
+# move window to next / previous space
+shift + alt - n : yabai -m window --space next
+shift + alt - p : yabai -m window --space prev
+
+# direct space focus
+alt - 1 : yabai -m space --focus 1
+alt - 2 : yabai -m space --focus 2
+alt - 3 : yabai -m space --focus 3
+alt - 4 : yabai -m space --focus 4
+alt - 5 : yabai -m space --focus 5
+alt - 6 : yabai -m space --focus 6
+alt - 7 : yabai -m space --focus 7
+alt - 8 : yabai -m space --focus 8
+alt - 9 : yabai -m space --focus 9
+
+# move window to numbered spaces
+shift + alt - 1 : yabai -m window --space 1
+shift + alt - 2 : yabai -m window --space 2
+shift + alt - 3 : yabai -m window --space 3
+shift + alt - 4 : yabai -m window --space 4
+shift + alt - 5 : yabai -m window --space 5
+shift + alt - 6 : yabai -m window --space 6
+shift + alt - 7 : yabai -m window --space 7
+shift + alt - 8 : yabai -m window --space 8
+shift + alt - 9 : yabai -m window --space 9
+
+# create/destroy spaces. these need the yabai scripting addition
+shift + alt - c : yabai -m space --create
+shift + alt - w : yabai -m space --destroy
+
+# displays. 0x2B is comma, 0x2F is period
+alt - 0x2B : yabai -m display --focus prev
+alt - 0x2F : yabai -m display --focus next
+shift + alt - 0x2B : yabai -m window --display prev --focus
+shift + alt - 0x2F : yabai -m window --display next --focus
+
+# layout controls
+alt - b : yabai -m space --balance
+alt - r : yabai -m space --rotate 90
+alt - x : yabai -m space --mirror x-axis
+alt - y : yabai -m space --mirror y-axis
+
+alt - space : yabai -m window --toggle float
+# Поместить float окно ровно по центру (размер 70% от экрана)
+alt - c : yabai -m window --grid 10:10:1:1:8:8
+
+# Развернуть float на левую/правую половину
+alt - left  : yabai -m window --grid 1:2:0:0:1:1
+alt - right : yabai -m window --grid 1:2:1:0:1:1
+alt - f : yabai -m window --toggle zoom-fullscreen
+
+
+# reload
+shift + alt - r : ~/.config/yabai/restart.sh
