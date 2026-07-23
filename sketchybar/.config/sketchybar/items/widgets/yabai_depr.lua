@@ -2,13 +2,13 @@ local colors = require("colors")
 local settings = require("settings")
 local app_icons = require("helpers.app_icons")
 
--- Укажи правильные пути к бинарникам, если они отличаются
 local yabai_bin = "/opt/homebrew/bin/yabai"
 local jq_bin = "/opt/homebrew/bin/jq"
 
 local app_icon_size_medium = "sketchybar-app-font:Regular:" .. settings.sizes.icon_medium
 local app_icon_size_small = "sketchybar-app-font:Regular:" .. settings.sizes.icon_small
 
+local MAX_SPACES = 15
 local MAX_INACTIVE_SLOTS = 10
 
 local function trim(value)
@@ -17,17 +17,29 @@ end
 
 sbar.add("event", "yabai_refresh")
 
-local yabai_workspace = sbar.add("item", "yabai.ws", {
+sbar.add("item", "edge_dadding", {
 	position = "left",
-	icon = {
-		font = settings.label_font,
-		color = colors.white,
-		align = "center",
-	},
+	icon = { drawing = false },
 	label = { drawing = false },
-	padding_left = settings.paddings.edge_padding + settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
+	padding_left = settings.paddings.edge_padding,
 })
+
+local space_items = {}
+for i = 1, MAX_SPACES do
+	space_items[i] = sbar.add("item", "yabai.space." .. i, {
+		position = "left",
+		icon = {
+			font = settings.label_font,
+			string = tostring(i),
+			color = colors.white,
+			align = "center",
+		},
+		label = { drawing = false },
+		drawing = false,
+		padding_left = settings.paddings.paddings,
+		padding_right = settings.paddings.paddings,
+	})
+end
 
 local yabai_active = sbar.add("item", "yabai.active", {
 	position = "left",
@@ -42,7 +54,6 @@ local yabai_active = sbar.add("item", "yabai.active", {
 })
 
 local inactive_slots = {}
-
 for i = 1, MAX_INACTIVE_SLOTS do
 	local slot = sbar.add("item", "yabai.inactive." .. i, {
 		position = "left",
@@ -59,17 +70,42 @@ for i = 1, MAX_INACTIVE_SLOTS do
 	table.insert(inactive_slots, slot)
 end
 
-local function render_workspace(workspace_id)
+local function reorder_items(visible_spaces_count)
+	local last_item = nil
+
+	for i = 1, MAX_SPACES do
+		if space_items[i]:query().geometry.drawing == "on" then
+			if last_item then
+				space_items[i]:move({ after = last_item })
+			end
+			last_item = "yabai.space." .. i
+		end
+	end
+
+	if last_item then
+		yabai_active:move({ after = last_item })
+		last_item = "yabai.active"
+	end
+
+	for i, slot in ipairs(inactive_slots) do
+		if slot:query().geometry.drawing == "on" then
+			if last_item then
+				slot:move({ after = last_item })
+			end
+			last_item = "yabai.inactive." .. i
+		end
+	end
+end
+
+local function render_apps(workspace_id)
 	if not workspace_id or workspace_id == "" or workspace_id == "null" then
 		return
 	end
 
-	-- Получаем список всех окон на спейсе
 	local apps_cmd =
 		string.format("%s -m query --windows --space %s | %s -r '.[].app'", yabai_bin, workspace_id, jq_bin)
 
 	sbar.exec(apps_cmd, function(workspace_apps_output)
-		-- Получаем активное окно и его спейс
 		local focused_cmd = string.format(
 			'%s -m query --windows --window | %s -r \'if .app then .app + "|" + (.space|tostring) else "" end\'',
 			yabai_bin,
@@ -86,7 +122,7 @@ local function render_workspace(workspace_id)
 			local seen_apps = {}
 
 			for app_name in string.gmatch(workspace_apps_output, "[^\r\n]+") do
-				if app_name ~= "null" then -- игнорируем пустые ответы от jq
+				if app_name ~= "null" then
 					local normalized_app_name = trim(app_name)
 					if normalized_app_name ~= "" and not seen_apps[normalized_app_name] then
 						seen_apps[normalized_app_name] = true
@@ -120,36 +156,63 @@ local function render_workspace(workspace_id)
 				end
 			end
 
-			yabai_workspace:set({
-				icon = { string = workspace_id },
-			})
-
 			yabai_active:set({
 				icon = {
 					string = active_icon,
 					drawing = (active_icon ~= ""),
 				},
 			})
+
+			reorder_items()
 		end)
 	end)
 end
 
-local function refresh_workspace(env)
-	local workspace_id = env.FOCUSED_WORKSPACE
-	if workspace_id and workspace_id ~= "" then
-		render_workspace(workspace_id)
-		return
-	end
+local function refresh_workspace()
+	sbar.delay(0.05, function()
+		local spaces_cmd = string.format(
+			'%s -m query --spaces | %s -r \'.[] | "\\(.index)|\\(.["has-focus"])|\\(.windows | length)"\'',
+			yabai_bin,
+			jq_bin
+		)
 
-	-- Если env пустой, запрашиваем текущий рабочий стол
-	local space_cmd = string.format("%s -m query --spaces --space | %s -r '.index'", yabai_bin, jq_bin)
-	sbar.exec(space_cmd, function(focused_workspace_output)
-		render_workspace(trim(focused_workspace_output))
+		sbar.exec(spaces_cmd, function(spaces_output)
+			local active_workspace_id = nil
+
+			for i = 1, MAX_SPACES do
+				space_items[i]:set({ drawing = false })
+			end
+
+			for line in string.gmatch(spaces_output, "[^\r\n]+") do
+				local index_str, has_focus, windows_count_str = string.match(line, "^([^|]+)|([^|]+)|([^|]+)")
+				local index = tonumber(index_str)
+				local windows_count = tonumber(windows_count_str) or 0
+
+				if index and space_items[index] then
+					local is_active = (has_focus == "true")
+					local has_windows = windows_count > 0
+
+					if is_active then
+						active_workspace_id = index_str
+					end
+
+					space_items[index]:set({
+						icon = {
+							color = is_active and colors.blue or colors.white,
+						},
+						drawing = is_active or has_windows,
+					})
+				end
+			end
+
+			if active_workspace_id then
+				render_apps(active_workspace_id)
+			end
+		end)
 	end)
 end
 
--- Подписка на нативные и кастомные события
-yabai_workspace:subscribe({ "yabai_refresh", "front_app_switched", "space_change" }, refresh_workspace)
+sbar.add("item", "yabai.event_listener", { drawing = false })
+	:subscribe({ "yabai_refresh", "front_app_switched", "space_change" }, refresh_workspace)
 
--- Триггер при загрузке
-refresh_workspace({})
+refresh_workspace()
