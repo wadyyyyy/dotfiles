@@ -1,6 +1,9 @@
+tap "acsandmann/tap"
+tap "asmvik/formulae"
 tap "barutsrb/tap", "https://github.com/BarutSRB/homebrew-tap", trusted: { casks: ["omniwm"] }
 tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae", trusted: true
 tap "nikitabobko/tap"
+tap "zennotes/tap"
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Generate compilation database for clang tooling
@@ -13,10 +16,12 @@ brew "check"
 brew "clang-format"
 # Console Matrix
 brew "cmatrix"
+# CPU architecture fetching tool
+brew "cpufetch"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Pack, ship and run any application as a lightweight container
-brew "docker"
+brew "docker", link: false
 # Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-buildx"
 # Isolated development environments using Docker
@@ -45,6 +50,8 @@ brew "imagemagick"
 brew "jq"
 # Simple terminal UI for git commands
 brew "lazygit"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
 # Powerful, lightweight programming language
 brew "lua"
 # Package manager for the Lua programming language
@@ -59,6 +66,8 @@ brew "neovim"
 brew "node"
 # Retrieves currently playing media, and simulates media actions
 brew "nowplaying-cli"
+# Sliding, tiling window manager for MacOS
+brew "paneru"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.14"
 # CLI for Postgres with auto-completion and syntax highlighting
@@ -103,16 +112,24 @@ brew "zoxide"
 brew "zsh-autosuggestions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+# Tiling window manager for macOS
+brew "acsandmann/tap/rift", trusted: true
+# Simple hotkey-daemon for macOS.
+brew "asmvik/formulae/skhd", trusted: true
+# A tiling window manager for macOS based on binary space partitioning.
+brew "asmvik/formulae/yabai", trusted: true
 # A window border system for macOS
 brew "felixkratz/formulae/borders"
 # Custom macOS statusbar with shell plugin, interaction and graph support
 brew "felixkratz/formulae/sketchybar"
 # AeroSpace is an i3-like tiling window manager for macOS
-cask "nikitabobko/tap/aerospace"
+cask "nikitabobko/tap/aerospace", trusted: true
 # Application uninstaller
 cask "appcleaner"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
+# Write, edit, and chat about your code with AI
+cask "cursor"
 # Browser for SQLite databases
 cask "db-browser-for-sqlite"
 # Web browser
@@ -120,6 +137,7 @@ cask "firefox"
 cask "font-fira-code-nerd-font"
 cask "font-fira-mono-nerd-font"
 cask "font-iosevka"
+cask "font-jetbrains-mono-nerd-font"
 cask "font-sf-mono"
 cask "font-sf-pro"
 cask "font-sketchybar-app-font"
@@ -131,6 +149,8 @@ cask "handbrake-app"
 cask "homerow"
 # Keyboard customiser
 cask "karabiner-elements"
+# Free cross-platform office suite, fresh version
+cask "libreoffice"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Knowledge base that works on top of a local folder of plain text Markdown files
@@ -143,10 +163,16 @@ cask "sf-symbols"
 cask "topnotch"
 # AI image upscaler
 cask "upscayl"
+# Virtual machines UI using QEMU
+cask "utm"
 # Multimedia player
 cask "vlc"
+# Multiplayer code editor
+cask "zed"
 # Gecko based web browser
 cask "zen"
+# Keyboard-first, local-first Markdown notes with vim motions and live preview
+cask "zennotes/tap/zennotes", trusted: true
 vscode "asvetliakov.vscode-neovim"
 vscode "brandonkirbyson.vscode-animations"
 vscode "drcika.apc-extension"
