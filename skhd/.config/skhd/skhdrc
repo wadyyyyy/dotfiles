@@ -107,7 +107,7 @@ alt - r : yabai -m space --rotate 90
 alt - x : yabai -m space --mirror x-axis
 alt - y : yabai -m space --mirror y-axis
 
-alt - space : yabai -m window --toggle float
+# alt - space : yabai -m window --toggle float
 # Поместить float окно ровно по центру (размер 70% от экрана)
 alt - c : yabai -m window --grid 10:10:1:1:8:8
 

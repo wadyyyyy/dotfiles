@@ -248,6 +248,7 @@ return {
 	["Rider"] = ":rider:",
 	["JetBrains Rider"] = ":rider:",
 	["Rio"] = ":rio:",
+	["Rocket.Chat"] = ":slack:",
 	["Royal TSX"] = ":royaltsx:",
 	["Safari"] = ":safari:",
 	["Safari浏览器"] = ":safari:",
