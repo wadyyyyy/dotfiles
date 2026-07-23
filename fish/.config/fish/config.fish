@@ -36,6 +36,9 @@ abbr -a bordersconf "nvim ~/.config/borders/bordersrc"
 abbr -a svimconf "nvim ~/.config/svim/blacklist"
 abbr -a ffconf "nvim ~/.config/fastfetch"
 abbr -a niriconf "nvim ~/.config/niri/"
+abbr -a riftconf "nvim ~/.config/rift/config.toml"
+abbr -a ybconf "nvim ~/.config/yabai/"
+abbr -a skhdconf "nvim ~/.config/skhd/skhdrc"
 
 abbr -a cm chezmoi
 abbr -a ip "curl ipinfo.io"
@@ -70,6 +73,9 @@ alias sexy "fastfetch --config ~/.config/fastfetch/custom.jsonc"
 alias ff "fastfetch --config ~/.config/fastfetch/apple.jsonc"
 abbr -a c clear
 alias cd z
+alias rm rmt
+alias ls lsd
+alias n nvim
 abbr -a yz yazi
 
 bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
