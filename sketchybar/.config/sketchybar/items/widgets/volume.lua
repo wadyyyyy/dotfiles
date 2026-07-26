@@ -1,5 +1,4 @@
 local colors = require("colors")
--- local icons = require("icons")
 local settings = require("settings")
 
 local volume_percent = sbar.add("item", "widgets.volume.percent", {
@@ -11,27 +10,42 @@ local volume_percent = sbar.add("item", "widgets.volume.percent", {
 		color = colors.white,
 		align = "center",
 	},
-	width = settings.ui.label.width,
-	padding_left = settings.paddings.paddings,
+	padding_left = settings.paddings.group_padding,
 	padding_right = settings.paddings.paddings,
 })
 
 local volume_icon = sbar.add("item", "widgets.volume.icon", {
 	position = "right",
+	label = { drawing = false },
 	icon = {
 		string = "VOL",
 		color = colors.blue,
 		font = settings.label_font,
 		align = "center",
 	},
-	label = { drawing = false },
 	padding_left = settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
 })
 
-sbar.add("item", "widgets.volume.padding", {
+sbar.add("item", "widgets.volume.spacer", {
 	position = "right",
-	width = settings.paddings.group_padding,
+	icon = { drawing = false },
+	label = { drawing = false },
+	width = settings.paddings.container_paddings,
+})
+
+sbar.add("bracket", {
+	"widgets.volume.icon",
+	"widgets.volume.percent",
+}, {
+	background = {
+		color = colors.container.bg,
+		height = settings.ui.container.height,
+		border_color = colors.container.border_color,
+		border_width = settings.ui.container.border_width,
+		corner_radius = settings.ui.container.corner_radius,
+		y_offset = settings.ui.container.y_offset,
+	},
+	padding_left = settings.paddings.paddings,
 })
 
 volume_percent:subscribe("volume_change", function(env)

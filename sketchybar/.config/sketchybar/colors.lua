@@ -4,7 +4,6 @@ local colors = {
 	black = 0xff1d2021,
 	white = 0xffd4be98,
 
-	-- red = 0xffea6962,
 	red = 0xfffb4834,
 	green = 0xffa9b665,
 	blue = 0xff7daea3,
@@ -13,16 +12,19 @@ local colors = {
 	magenta = 0xffd3869b,
 	grey = 0xff928374,
 
-	transparent = 0x00000000,
+	transparent = 0xffffffff,
 
 	bar = {
-		bg = 0xb3202020,
+		-- bg = 0xb3202020,
+		bg = 0xff000000,
 		border_color = 0x35e2e2e3,
 		blur = 12,
 	},
 	container = {
-		bg = 0xff000000,
-		border_color = 0xffffffff,
+		bg = 0x11ffffff,
+		border_color = 0x33ffffff,
+		nesting_bg = 0x15ffffff,
+		nesting_border_color = 0x35e2e2e3,
 	},
 
 	with_alpha = function(color, alpha)

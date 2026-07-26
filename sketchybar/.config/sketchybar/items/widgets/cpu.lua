@@ -17,14 +17,13 @@ local cpu_label = sbar.add("item", "widgets.cpu.label", {
 		color = colors.white,
 		align = "center",
 	},
-	width = settings.ui.label.width,
-
-	padding_left = settings.paddings.paddings,
+	padding_left = settings.paddings.group_padding,
 	padding_right = settings.paddings.paddings,
 })
 
 local cpu_icon = sbar.add("item", "widgets.cpu.icon", {
 	position = "right",
+	label = { drawing = false },
 	icon = {
 		string = "CPU",
 		color = colors.blue,
@@ -35,17 +34,29 @@ local cpu_icon = sbar.add("item", "widgets.cpu.icon", {
 		},
 		align = "center",
 	},
-	width = settings.ui.icon.width,
-
 	padding_left = settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
-
-	label = { drawing = false },
 })
 
-sbar.add("item", "widgets.cpu.padding", {
+sbar.add("item", "widgets.cpu.spacer", {
 	position = "right",
-	width = settings.paddings.group_padding,
+	icon = { drawing = false },
+	label = { drawing = false },
+	width = settings.paddings.container_paddings,
+})
+
+sbar.add("bracket", {
+	"widgets.cpu.icon",
+	"widgets.cpu.label",
+}, {
+	background = {
+		color = colors.container.bg,
+		height = settings.ui.container.height,
+		border_color = colors.container.border_color,
+		border_width = settings.ui.container.border_width,
+		corner_radius = settings.ui.container.corner_radius,
+		y_offset = settings.ui.container.y_offset,
+	},
+	padding_left = settings.paddings.paddings,
 })
 
 local function get_cpu_color(load)

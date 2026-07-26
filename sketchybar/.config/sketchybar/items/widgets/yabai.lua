@@ -8,7 +8,20 @@ local jq_bin = "/opt/homebrew/bin/jq"
 local app_icon_size_medium = "sketchybar-app-font:Regular:" .. settings.sizes.icon_medium
 local app_icon_size_small = "sketchybar-app-font:Regular:" .. settings.sizes.icon_small
 
-local MAX_INACTIVE_SLOTS = 10
+local MAX_SPACES = 10
+local MAX_APPS = 7
+
+local y_cfg = {
+	bracket_padding = 0,
+	space = {
+		padding_left = 6,
+		padding_right = 6,
+		gap = settings.paddings.group_padding,
+	},
+	apps = {
+		gap = settings.paddings.paddings,
+	},
+}
 
 local function trim(value)
 	return value and value:gsub("^%s*(.-)%s*$", "%1") or value
@@ -16,134 +29,209 @@ end
 
 sbar.add("event", "yabai_refresh")
 
-local yabai_workspace = sbar.add("item", "yabai.ws", {
+sbar.add("item", "another_edge_padding", {
 	position = "left",
-	icon = {
-		font = settings.label_font,
-		color = colors.white,
-		align = "center",
-	},
+	icon = { drawing = false },
 	label = { drawing = false },
-	padding_left = settings.paddings.edge_padding + settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
+	padding_left = settings.paddings.edge_padding,
 })
 
-local yabai_active = sbar.add("item", "yabai.active", {
+local space_items = {}
+local spaces_bracket_items = {}
+
+local bracket_left_pad = sbar.add("item", "yabai.bracket.padding.left", {
 	position = "left",
-	icon = {
-		font = app_icon_size_medium,
-		color = colors.blue,
-		align = "center",
-	},
+	width = y_cfg.bracket_padding,
+	drawing = true,
+	icon = { drawing = false },
 	label = { drawing = false },
-	padding_left = settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
+	padding_left = 0,
+	padding_right = 0,
 })
+table.insert(spaces_bracket_items, "yabai.bracket.padding.left")
 
-local inactive_slots = {}
+for space_id = 1, MAX_SPACES do
+	local space_name = "yabai.space." .. space_id
 
-for i = 1, MAX_INACTIVE_SLOTS do
-	local slot = sbar.add("item", "yabai.inactive." .. i, {
+	space_items[space_id] = sbar.add("item", space_name, {
 		position = "left",
-		icon = { drawing = false },
-		label = {
-			font = app_icon_size_small,
-			color = colors.grey,
+		icon = {
+			font = settings.label_font,
+			color = colors.white,
 			align = "center",
+			padding_left = y_cfg.space.padding_left,
+			padding_right = y_cfg.space.padding_right,
 		},
+		background = {
+			height = settings.ui.container.nesting_height,
+			color = colors.container.nesting_bg,
+			corner_radius = settings.ui.container.nesting_corner_radius,
+			border_color = colors.container.nesting_border_color,
+			border_width = settings.ui.background.border_width + 1,
+		},
+		label = { drawing = false },
 		drawing = false,
-		padding_left = settings.paddings.paddings,
-		padding_right = settings.paddings.paddings,
+		padding_left = y_cfg.space.gap,
+		padding_right = 0,
 	})
-	table.insert(inactive_slots, slot)
+	table.insert(spaces_bracket_items, space_name)
 end
 
-local function render_workspace(workspace_id)
-	if not workspace_id or workspace_id == "" or workspace_id == "null" then
-		return
-	end
+local bracket_right_pad = sbar.add("item", "yabai.bracket.padding.right", {
+	position = "left",
+	width = y_cfg.bracket_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
+	padding_left = y_cfg.space.gap,
+	padding_right = 0,
+})
+table.insert(spaces_bracket_items, "yabai.bracket.padding.right")
 
-	local apps_cmd =
-		string.format("%s -m query --windows --space %s | %s -r '.[].app'", yabai_bin, workspace_id, jq_bin)
+sbar.add("bracket", "yabai.bracket", spaces_bracket_items, {
+	background = {
+		color = colors.container.bg,
+		height = settings.ui.container.height,
+		border_color = colors.container.border_color,
+		border_width = settings.ui.container.border_width,
+		corner_radius = settings.ui.container.corner_radius,
+		y_offset = settings.ui.container.y_offset,
+	},
+})
 
-	sbar.exec(apps_cmd, function(workspace_apps_output)
-		local focused_cmd = string.format(
-			'%s -m query --windows --window | %s -r \'if .app then .app + "|" + (.space|tostring) else "" end\'',
+sbar.add("item", "yabai.spacer", {
+	position = "left",
+	width = settings.paddings.paddings + 4,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
+})
+
+local app_slots = {}
+for app_index = 1, MAX_APPS do
+	local app_name = "yabai.app." .. app_index
+	app_slots[app_index] = sbar.add("item", app_name, {
+		position = "left",
+		icon = { align = "center" },
+		label = { drawing = false },
+		drawing = false,
+		padding_left = (app_index == 1) and 0 or y_cfg.apps.gap,
+		padding_right = 0,
+	})
+end
+
+local ignored_apps = {
+	[""] = true,
+	["Control Center"] = true,
+	["Window Server"] = true,
+	["WindowManager"] = true,
+	["Spotlight"] = true,
+	["SystemUIServer"] = true,
+}
+
+local function refresh_workspace()
+	sbar.delay(0.05, function()
+		local spaces_cmd = string.format(
+			'%s -m query --spaces | %s -r \'.[] | "\\(.index)|\\(.["has-focus"])|\\(.label)"\'',
 			yabai_bin,
 			jq_bin
 		)
 
-		sbar.exec(focused_cmd, function(focused_output)
-			local focused_app, focused_workspace = string.match(focused_output, "^([^|]+)|([^|\r\n]+)")
-			focused_app = trim(focused_app)
-			focused_workspace = trim(focused_workspace)
+		sbar.exec(spaces_cmd, function(spaces_output)
+			local active_spaces = {}
+			local space_labels = {}
 
-			local active_icon = ""
-			local inactive_glyphs = {}
-			local seen_apps = {}
+			for line in string.gmatch(spaces_output, "[^\r\n]+") do
+				local index_str, has_focus, label = string.match(line, "^([^|]+)|([^|]+)|(.*)$")
+				local index = tonumber(index_str)
 
-			for app_name in string.gmatch(workspace_apps_output, "[^\r\n]+") do
-				if app_name ~= "null" then -- игнорируем пустые ответы от jq
-					local normalized_app_name = trim(app_name)
-					if normalized_app_name ~= "" and not seen_apps[normalized_app_name] then
-						seen_apps[normalized_app_name] = true
-						local glyph = app_icons[normalized_app_name] or app_icons.Default or "—"
+				if index then
+					active_spaces[index] = true
+					local display_label = (label and label ~= "" and label ~= "null") and label or index_str
+					space_labels[index] = { label = display_label, focus = (has_focus == "true") }
+				end
+			end
 
-						if
-							normalized_app_name == focused_app
-							and tostring(focused_workspace) == tostring(workspace_id)
-						then
-							active_icon = glyph
-						else
-							table.insert(inactive_glyphs, glyph)
+			for space_id = 1, MAX_SPACES do
+				if active_spaces[space_id] then
+					local s_info = space_labels[space_id]
+					space_items[space_id]:set({
+						drawing = true,
+						icon = {
+							string = s_info.label,
+							color = s_info.focus and colors.blue or colors.white,
+						},
+					})
+				else
+					space_items[space_id]:set({ drawing = false })
+				end
+			end
+
+			local windows_cmd = string.format(
+				'%s -m query --windows | %s -r \'.[]? | select(."is-visible" == true and .subrole == "AXStandardWindow") | "\\(.space)|\\(.["has-focus"])|\\(.app)"\'',
+				yabai_bin,
+				jq_bin
+			)
+
+			sbar.exec(windows_cmd, function(windows_output)
+				local current_visible_apps = {}
+
+				for line in string.gmatch(windows_output, "[^\r\n]+") do
+					local space_str, has_focus, app_name = string.match(line, "^([^|]+)|([^|]+)|(.+)$")
+					app_name = trim(app_name or "")
+
+					if app_name ~= "" and app_name ~= "null" and not ignored_apps[app_name] then
+						local already_added = false
+						for _, existing_app in ipairs(current_visible_apps) do
+							if existing_app.name == app_name then
+								already_added = true
+								if has_focus == "true" then
+									existing_app.focus = true
+								end
+								break
+							end
+						end
+
+						if not already_added then
+							table.insert(current_visible_apps, {
+								name = app_name,
+								focus = (has_focus == "true"),
+							})
 						end
 					end
 				end
-			end
 
-			if active_icon == "" and #inactive_glyphs == 0 then
-				table.insert(inactive_glyphs, "—")
-			end
+				for i = 1, MAX_APPS do
+					local app = current_visible_apps[i]
+					local slot = app_slots[i]
 
-			for i, slot in ipairs(inactive_slots) do
-				local glyph = inactive_glyphs[i]
-				if glyph then
-					slot:set({
-						label = { string = glyph },
-						drawing = true,
-					})
-				else
-					slot:set({ drawing = false })
+					if app then
+						local glyph = app_icons[app.name] or app_icons.Default or "—"
+						slot:set({
+							drawing = true,
+							icon = {
+								string = glyph,
+								font = app.focus and app_icon_size_medium or app_icon_size_small,
+								color = app.focus and colors.blue or colors.grey,
+							},
+						})
+					else
+						slot:set({ drawing = false })
+					end
 				end
-			end
-
-			yabai_workspace:set({
-				icon = { string = workspace_id },
-			})
-
-			yabai_active:set({
-				icon = {
-					string = active_icon,
-					drawing = (active_icon ~= ""),
-				},
-			})
+			end)
 		end)
 	end)
 end
 
-local function refresh_workspace(env)
-	local workspace_id = env.FOCUSED_WORKSPACE
-	if workspace_id and workspace_id ~= "" then
-		render_workspace(workspace_id)
-		return
-	end
+sbar.add("item", "yabai.event_listener", { drawing = false }):subscribe({
+	"yabai_refresh",
+	"front_app_switched",
+	"space_change",
+	"window_created",
+	"window_destroyed",
+	"window_minimized",
+	"window_deminimized",
+}, refresh_workspace)
 
-	local space_cmd = string.format("%s -m query --spaces --space | %s -r '.index'", yabai_bin, jq_bin)
-	sbar.exec(space_cmd, function(focused_workspace_output)
-		render_workspace(trim(focused_workspace_output))
-	end)
-end
-
-yabai_workspace:subscribe({ "yabai_refresh", "front_app_switched", "space_change" }, refresh_workspace)
-
-refresh_workspace({})
+refresh_workspace()

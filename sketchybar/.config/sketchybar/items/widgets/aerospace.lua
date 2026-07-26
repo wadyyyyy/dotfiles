@@ -20,15 +20,31 @@ end
 sbar.add("event", "aerospace_refresh")
 sbar.add("event", "aerospace_mode_change")
 
+sbar.add("item", "another_edge_padding", {
+	position = "left",
+	icon = { drawing = false },
+	label = { drawing = false },
+	padding_left = settings.paddings.edge_padding,
+})
+
 local aerospace_workspace = sbar.add("item", "aerospace.ws", {
 	position = "left",
 	icon = {
 		font = settings.label_font,
 		color = colors.white,
 		align = "center",
+		-- padding_left = 6,
+		-- padding_right = 6,
 	},
+	-- background = {
+	-- 	height = settings.ui.container.nesting_height,
+	-- 	color = colors.container.nesting_bg,
+	-- 	corner_radius = settings.ui.container.nesting_corner_radius,
+	-- 	border_color = colors.white,
+	-- 	border_width = settings.ui.background.border_width + 1,
+	-- },
 	label = { drawing = false },
-	padding_left = settings.paddings.edge_padding + settings.paddings.paddings,
+	padding_left = settings.paddings.paddings,
 	padding_right = settings.paddings.paddings,
 })
 
@@ -40,9 +56,8 @@ local aerospace_active = sbar.add("item", "aerospace.active", {
 		align = "center",
 	},
 	label = { drawing = false },
-
-	padding_left = settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
+	padding_left = 1,
+	padding_right = settings.paddings.paddings + 1,
 })
 
 local inactive_slots = {}
@@ -57,11 +72,30 @@ for i = 1, MAX_INACTIVE_SLOTS do
 			align = "center",
 		},
 		drawing = false,
-		padding_left = settings.paddings.paddings,
 		padding_right = settings.paddings.paddings,
 	})
 	table.insert(inactive_slots, slot)
 end
+
+local aerospace_bracket_items = {
+	"aerospace.ws",
+	"aerospace.active",
+}
+
+for i = 1, MAX_INACTIVE_SLOTS do
+	table.insert(aerospace_bracket_items, "aerospace.inactive." .. i)
+end
+
+sbar.add("bracket", aerospace_bracket_items, {
+	background = {
+		color = colors.container.bg,
+		height = settings.ui.container.height,
+		border_color = colors.container.border_color,
+		border_width = settings.ui.container.border_width,
+		corner_radius = settings.ui.container.corner_radius,
+		y_offset = settings.ui.container.y_offset,
+	},
+})
 
 local function render_workspace(workspace_id)
 	if not workspace_id or workspace_id == "" then
@@ -77,6 +111,7 @@ local function render_workspace(workspace_id)
 				focused_workspace = trim(focused_workspace)
 
 				local active_icon = ""
+
 				local inactive_glyphs = {}
 				local seen_apps = {}
 
@@ -95,7 +130,7 @@ local function render_workspace(workspace_id)
 				end
 
 				if active_icon == "" and #inactive_glyphs == 0 then
-					table.insert(inactive_glyphs, "—")
+					active_icon = "—"
 				end
 
 				for i, slot in ipairs(inactive_slots) do

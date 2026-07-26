@@ -9,9 +9,9 @@ sbar.bar({
 	blur_radius = colors.bar.blur,
 	padding_right = 0,
 	padding_left = 0,
-	margin = 8,
-	y_offset = 8,
+	margin = settings.ui.background.margin,
+	y_offset = settings.ui.background.y_offset,
 	corner_radius = settings.ui.background.corner_radius,
 	display = 1,
-	position = "right",
+	position = "top",
 })
