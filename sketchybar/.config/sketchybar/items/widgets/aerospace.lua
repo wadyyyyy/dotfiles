@@ -2,23 +2,40 @@ local colors = require("colors")
 local settings = require("settings")
 local app_icons = require("helpers.app_icons")
 
-local aerospace_bin = settings.binaries.aerospace
-local app_icon_size_large = "sketchybar-app-font:Regular:" .. settings.sizes.icon_large
+local aerospace_bin = "/opt/homebrew/bin/aerospace"
+
 local app_icon_size_medium = "sketchybar-app-font:Regular:" .. settings.sizes.icon_medium
 local app_icon_size_small = "sketchybar-app-font:Regular:" .. settings.sizes.icon_small
 
-local MAX_INACTIVE_SLOTS = 10
+local WORKSPACES = {
+	"main",
+	"sec",
+	"brwse",
+	"note",
+	"ai",
+	"chat",
+	"vpn",
+}
+
+local MAX_APPS = 7
+
+local y_cfg = {
+	bracket_padding = 1,
+	space = {
+		padding_left = 6,
+		padding_right = 6,
+		gap = settings.paddings.group_padding - 4,
+	},
+	apps = {
+		gap = settings.paddings.paddings,
+	},
+}
 
 local function trim(value)
-	return value and value:gsub("^%s*(.-)%s*$", "%1") or value
-end
-
-local function aerospace_exec(arguments, callback)
-	sbar.exec(aerospace_bin .. " " .. arguments, callback)
+	return value and value:gsub("^%s*(.-)%s*$", "%1") or ""
 end
 
 sbar.add("event", "aerospace_refresh")
-sbar.add("event", "aerospace_mode_change")
 
 sbar.add("item", "another_edge_padding", {
 	position = "left",
@@ -27,66 +44,67 @@ sbar.add("item", "another_edge_padding", {
 	padding_left = settings.paddings.edge_padding,
 })
 
-local aerospace_workspace = sbar.add("item", "aerospace.ws", {
+--------------------------------------------------
+-- WORKSPACES
+--------------------------------------------------
+
+local space_items = {}
+local bracket_items = {}
+
+sbar.add("item", "aerospace.bracket.padding.left", {
 	position = "left",
-	icon = {
-		font = settings.label_font,
-		color = colors.white,
-		align = "center",
-		-- padding_left = 6,
-		-- padding_right = 6,
-	},
-	-- background = {
-	-- 	height = settings.ui.container.nesting_height,
-	-- 	color = colors.container.nesting_bg,
-	-- 	corner_radius = settings.ui.container.nesting_corner_radius,
-	-- 	border_color = colors.white,
-	-- 	border_width = settings.ui.background.border_width + 1,
-	-- },
+	width = y_cfg.bracket_padding,
+	icon = { drawing = false },
 	label = { drawing = false },
-	padding_left = settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
 })
 
-local aerospace_active = sbar.add("item", "aerospace.active", {
-	position = "left",
-	icon = {
-		font = app_icon_size_medium,
-		color = colors.blue,
-		align = "center",
-	},
-	label = { drawing = false },
-	padding_left = 1,
-	padding_right = settings.paddings.paddings + 1,
-})
+table.insert(bracket_items, "aerospace.bracket.padding.left")
 
-local inactive_slots = {}
+for i, ws in ipairs(WORKSPACES) do
+	local name = "aerospace.space." .. ws
 
-for i = 1, MAX_INACTIVE_SLOTS do
-	local slot = sbar.add("item", "aerospace.inactive." .. i, {
+	space_items[ws] = sbar.add("item", name, {
 		position = "left",
-		icon = { drawing = false },
-		label = {
-			font = app_icon_size_small,
-			color = colors.grey,
+
+		icon = {
+			font = settings.label_font,
+			color = colors.white,
 			align = "center",
+			padding_left = y_cfg.space.padding_left,
+			padding_right = y_cfg.space.padding_right,
 		},
-		drawing = false,
-		padding_right = settings.paddings.paddings,
+
+		background = {
+			height = settings.ui.container.nesting_height,
+			color = colors.container.nesting_bg,
+			corner_radius = settings.ui.container.nesting_corner_radius,
+			border_color = colors.container.nesting_border_color,
+			border_width = settings.ui.background.border_width + 1,
+		},
+
+		label = {
+			drawing = false,
+		},
+
+		drawing = true,
+
+		padding_left = y_cfg.space.gap,
 	})
-	table.insert(inactive_slots, slot)
+
+	table.insert(bracket_items, name)
 end
 
-local aerospace_bracket_items = {
-	"aerospace.ws",
-	"aerospace.active",
-}
+sbar.add("item", "aerospace.bracket.padding.right", {
+	position = "left",
+	width = y_cfg.bracket_padding,
+	icon = { drawing = false },
+	label = { drawing = false },
+})
 
-for i = 1, MAX_INACTIVE_SLOTS do
-	table.insert(aerospace_bracket_items, "aerospace.inactive." .. i)
-end
+table.insert(bracket_items, "aerospace.bracket.padding.right")
 
-sbar.add("bracket", aerospace_bracket_items, {
+sbar.add("bracket", "aerospace.bracket", bracket_items, {
+
 	background = {
 		color = colors.container.bg,
 		height = settings.ui.container.height,
@@ -97,95 +115,149 @@ sbar.add("bracket", aerospace_bracket_items, {
 	},
 })
 
-local function render_workspace(workspace_id)
-	if not workspace_id or workspace_id == "" then
+--------------------------------------------------
+-- APPS
+--------------------------------------------------
+
+sbar.add("item", "aerospace.spacer", {
+	position = "left",
+	width = settings.paddings.paddings + 4,
+	icon = { drawing = false },
+	label = { drawing = false },
+})
+
+local app_slots = {}
+
+for i = 1, MAX_APPS do
+	app_slots[i] = sbar.add("item", "aerospace.app." .. i, {
+		position = "left",
+
+		icon = {
+			align = "center",
+		},
+
+		label = {
+			drawing = false,
+		},
+
+		drawing = false,
+
+		padding_left = i == 1 and 0 or y_cfg.apps.gap,
+	})
+end
+
+local ignored_apps = {
+	[""] = true,
+	["Control Center"] = true,
+	["Window Server"] = true,
+	["WindowManager"] = true,
+	["Spotlight"] = true,
+	["SystemUIServer"] = true,
+}
+
+--------------------------------------------------
+-- REFRESH
+--------------------------------------------------
+
+local function refresh_apps(focused)
+	if not focused or focused == "" then
 		return
 	end
 
-	aerospace_exec(
-		string.format("list-windows --workspace %q --format '%%{app-name}'", workspace_id),
-		function(workspace_apps_output)
-			aerospace_exec("list-windows --focused --format '%{app-name}|%{workspace}'", function(focused_output)
-				local focused_app, focused_workspace = string.match(focused_output, "^([^|]+)|([^|\r\n]+)")
-				focused_app = trim(focused_app)
-				focused_workspace = trim(focused_workspace)
+	sbar.exec(
+		string.format("%s list-windows --workspace '%s' --format '%%{app-name}'", aerospace_bin, focused),
+		function(out)
+			local apps = {}
 
-				local active_icon = ""
+			for line in string.gmatch(out, "[^\r\n]+") do
+				local app = trim(line)
 
-				local inactive_glyphs = {}
-				local seen_apps = {}
+				if app ~= "" and not ignored_apps[app] then
+					local exists = false
 
-				for app_name in string.gmatch(workspace_apps_output, "[^\r\n]+") do
-					local normalized_app_name = trim(app_name)
-					if normalized_app_name ~= "" and not seen_apps[normalized_app_name] then
-						seen_apps[normalized_app_name] = true
-						local glyph = app_icons[normalized_app_name] or app_icons.Default or "—"
-
-						if normalized_app_name == focused_app and focused_workspace == workspace_id then
-							active_icon = glyph
-						else
-							table.insert(inactive_glyphs, glyph)
+					for _, v in ipairs(apps) do
+						if v.name == app then
+							exists = true
+							break
 						end
 					end
+
+					if not exists then
+						table.insert(apps, {
+							name = app,
+							focus = false,
+						})
+					end
+				end
+			end
+
+			sbar.exec(aerospace_bin .. " list-windows --focused --format '%{app-name}'", function(active)
+				active = trim(active)
+
+				for _, app in ipairs(apps) do
+					if app.name == active then
+						app.focus = true
+					end
 				end
 
-				if active_icon == "" and #inactive_glyphs == 0 then
-					active_icon = "—"
-				end
+				for i = 1, MAX_APPS do
+					local app = apps[i]
 
-				for i, slot in ipairs(inactive_slots) do
-					local glyph = inactive_glyphs[i]
-					if glyph then
-						slot:set({
-							label = { string = glyph },
+					if app then
+						local glyph = app_icons[app.name] or app_icons.Default or "—"
+
+						app_slots[i]:set({
 							drawing = true,
+							icon = {
+								string = glyph,
+								font = app.focus and app_icon_size_medium or app_icon_size_small,
+								color = app.focus and colors.blue or colors.grey,
+							},
 						})
 					else
-						slot:set({ drawing = false })
+						app_slots[i]:set({
+							drawing = false,
+						})
 					end
 				end
-
-				aerospace_exec("list-modes --current", function(mode_output)
-					local current_mode = trim(mode_output)
-					local workspace_label = workspace_id
-
-					if current_mode == "service" then
-						workspace_label = workspace_id .. "\n[S]"
-					end
-
-					aerospace_workspace:set({
-						icon = { string = workspace_label },
-					})
-
-					aerospace_active:set({
-						icon = {
-							string = active_icon,
-							drawing = (active_icon ~= ""),
-						},
-					})
-				end)
 			end)
 		end
 	)
 end
 
-local function refresh_workspace(env)
-	local workspace_id = env.FOCUSED_WORKSPACE
-	if workspace_id and workspace_id ~= "" then
-		render_workspace(workspace_id)
-		return
-	end
+local function refresh_workspace()
+	sbar.delay(0.05, function()
+		local focused = trim(os.getenv("FOCUSED_WORKSPACE"))
 
-	aerospace_exec("list-workspaces --focused", function(focused_workspace_output)
-		render_workspace(trim(focused_workspace_output))
+		if focused == "" then
+			sbar.exec(aerospace_bin .. " list-workspaces --focused", function(out)
+				refresh_workspace()
+			end)
+			return
+		end
+
+		-- всегда показываем все persistent workspaces
+
+		for _, ws in ipairs(WORKSPACES) do
+			space_items[ws]:set({
+				drawing = true,
+				icon = {
+					string = ws,
+					color = ws == focused and colors.blue or colors.white,
+				},
+			})
+		end
+
+		refresh_apps(focused)
 	end)
 end
 
-aerospace_workspace:subscribe({ "aerospace_refresh", "front_app_switched", "aerospace_mode_change" }, refresh_workspace)
+--------------------------------------------------
+-- EVENTS
+--------------------------------------------------
 
-aerospace_exec("list-workspaces --focused", function(focused_workspace_output)
-	local workspace_id = trim(focused_workspace_output)
-	if workspace_id and workspace_id ~= "" then
-		sbar.trigger("aerospace_refresh", { FOCUSED_WORKSPACE = workspace_id })
-	end
-end)
+sbar.add("item", "aerospace.event_listener", {
+	drawing = false,
+}):subscribe("aerospace_refresh", refresh_workspace)
+
+refresh_workspace()

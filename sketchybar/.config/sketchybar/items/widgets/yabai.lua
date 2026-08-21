@@ -12,11 +12,11 @@ local MAX_SPACES = 10
 local MAX_APPS = 7
 
 local y_cfg = {
-	bracket_padding = 0,
+	bracket_padding = 1,
 	space = {
-		padding_left = 6,
+		padding_left = 6, -- gap after space name to edge of it's container
 		padding_right = 6,
-		gap = settings.paddings.group_padding,
+		gap = settings.paddings.group_padding - 4, -- gap between space's containers
 	},
 	apps = {
 		gap = settings.paddings.paddings,
@@ -95,6 +95,8 @@ sbar.add("bracket", "yabai.bracket", spaces_bracket_items, {
 		border_color = colors.container.border_color,
 		border_width = settings.ui.container.border_width,
 		corner_radius = settings.ui.container.corner_radius,
+
+		-- corner_radius = 0,
 		y_offset = settings.ui.container.y_offset,
 	},
 })
@@ -131,97 +133,83 @@ local ignored_apps = {
 
 local function refresh_workspace()
 	sbar.delay(0.05, function()
-		local spaces_cmd = string.format(
-			'%s -m query --spaces | %s -r \'.[] | "\\(.index)|\\(.["has-focus"])|\\(.label)"\'',
-			yabai_bin,
-			jq_bin
-		)
+		sbar.exec(aerospace_bin .. " list-workspaces --focused", function(out)
+			local focused = trim(out)
+			for _, ws in ipairs(WORKSPACES) do
+				space_items[ws]:set({
+					icon = {
+						string = ws,
+						color = ws == focused and colors.blue or colors.white,
+					},
+				})
+			end
 
-		sbar.exec(spaces_cmd, function(spaces_output)
-			local active_spaces = {}
-			local space_labels = {}
+			refresh_apps(focused)
+		end)
+	end)
+end
 
-			for line in string.gmatch(spaces_output, "[^\r\n]+") do
-				local index_str, has_focus, label = string.match(line, "^([^|]+)|([^|]+)|(.*)$")
-				local index = tonumber(index_str)
+local function refresh_apps(focused)
+	sbar.exec(
+		string.format("%s list-windows --workspace '%s' --format '%%{app-name}'", aerospace_bin, focused),
+		function(out)
+			local apps = {}
 
-				if index then
-					active_spaces[index] = true
-					local display_label = (label and label ~= "" and label ~= "null") and label or index_str
-					space_labels[index] = { label = display_label, focus = (has_focus == "true") }
+			for line in string.gmatch(out, "[^\r\n]+") do
+				local app = trim(line)
+
+				if not ignored_apps[app] then
+					local exists = false
+
+					for _, v in ipairs(apps) do
+						if v.name == app then
+							exists = true
+							break
+						end
+					end
+
+					if not exists then
+						table.insert(apps, {
+							name = app,
+							focus = false,
+						})
+					end
 				end
 			end
 
-			for space_id = 1, MAX_SPACES do
-				if active_spaces[space_id] then
-					local s_info = space_labels[space_id]
-					space_items[space_id]:set({
-						drawing = true,
-						icon = {
-							string = s_info.label,
-							color = s_info.focus and colors.blue or colors.white,
-						},
-					})
-				else
-					space_items[space_id]:set({ drawing = false })
-				end
-			end
+			sbar.exec(aerospace_bin .. " list-windows --focused --format '%{app-name}'", function(active)
+				active = trim(active)
 
-			local windows_cmd = string.format(
-				'%s -m query --windows | %s -r \'.[]? | select(."is-visible" == true and .subrole == "AXStandardWindow") | "\\(.space)|\\(.["has-focus"])|\\(.app)"\'',
-				yabai_bin,
-				jq_bin
-			)
-
-			sbar.exec(windows_cmd, function(windows_output)
-				local current_visible_apps = {}
-
-				for line in string.gmatch(windows_output, "[^\r\n]+") do
-					local space_str, has_focus, app_name = string.match(line, "^([^|]+)|([^|]+)|(.+)$")
-					app_name = trim(app_name or "")
-
-					if app_name ~= "" and app_name ~= "null" and not ignored_apps[app_name] then
-						local already_added = false
-						for _, existing_app in ipairs(current_visible_apps) do
-							if existing_app.name == app_name then
-								already_added = true
-								if has_focus == "true" then
-									existing_app.focus = true
-								end
-								break
-							end
-						end
-
-						if not already_added then
-							table.insert(current_visible_apps, {
-								name = app_name,
-								focus = (has_focus == "true"),
-							})
-						end
+				for _, app in ipairs(apps) do
+					if app.name == active then
+						app.focus = true
 					end
 				end
 
 				for i = 1, MAX_APPS do
-					local app = current_visible_apps[i]
-					local slot = app_slots[i]
+					local app = apps[i]
 
 					if app then
 						local glyph = app_icons[app.name] or app_icons.Default or "—"
-						slot:set({
+
+						app_slots[i]:set({
 							drawing = true,
 							icon = {
 								string = glyph,
 								font = app.focus and app_icon_size_medium or app_icon_size_small,
+
 								color = app.focus and colors.blue or colors.grey,
 							},
 						})
 					else
-						slot:set({ drawing = false })
+						app_slots[i]:set({
+							drawing = false,
+						})
 					end
 				end
 			end)
-		end)
-	end)
+		end
+	)
 end
 
 sbar.add("item", "yabai.event_listener", { drawing = false }):subscribe({

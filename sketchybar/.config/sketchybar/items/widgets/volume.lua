@@ -1,6 +1,16 @@
 local colors = require("colors")
 local settings = require("settings")
 
+local nesting_padding = (settings.ui.container.height - settings.ui.container.nesting_height) / 2
+
+local outer_right_padding = sbar.add("item", "widgets.volume.outer.padding.right", {
+	position = "right",
+	width = nesting_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
+})
+
 local volume_percent = sbar.add("item", "widgets.volume.percent", {
 	position = "right",
 	icon = { drawing = false },
@@ -11,7 +21,7 @@ local volume_percent = sbar.add("item", "widgets.volume.percent", {
 		align = "center",
 	},
 	padding_left = settings.paddings.group_padding,
-	padding_right = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings - nesting_padding,
 })
 
 local volume_icon = sbar.add("item", "widgets.volume.icon", {
@@ -23,7 +33,15 @@ local volume_icon = sbar.add("item", "widgets.volume.icon", {
 		font = settings.label_font,
 		align = "center",
 	},
-	padding_left = settings.paddings.paddings,
+	padding_left = settings.paddings.paddings - nesting_padding,
+})
+
+local outer_left_padding = sbar.add("item", "widgets.volume.outer.padding.left", {
+	position = "right",
+	width = nesting_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
 })
 
 sbar.add("item", "widgets.volume.spacer", {
@@ -33,9 +51,24 @@ sbar.add("item", "widgets.volume.spacer", {
 	width = settings.paddings.container_paddings,
 })
 
-sbar.add("bracket", {
+sbar.add("bracket", "widgets.volume.inner", {
 	"widgets.volume.icon",
 	"widgets.volume.percent",
+}, {
+	background = {
+		color = colors.container.nesting_bg,
+		height = settings.ui.container.nesting_height,
+		corner_radius = settings.ui.container.nesting_corner_radius,
+		border_color = colors.container.nesting_border_color,
+		border_width = settings.ui.background.border_width + 1,
+	},
+})
+
+sbar.add("bracket", "widgets.volume.outer", {
+	"widgets.volume.outer.padding.left",
+	"widgets.volume.icon",
+	"widgets.volume.percent",
+	"widgets.volume.outer.padding.right",
 }, {
 	background = {
 		color = colors.container.bg,
@@ -45,7 +78,6 @@ sbar.add("bracket", {
 		corner_radius = settings.ui.container.corner_radius,
 		y_offset = settings.ui.container.y_offset,
 	},
-	padding_left = settings.paddings.paddings,
 })
 
 volume_percent:subscribe("volume_change", function(env)

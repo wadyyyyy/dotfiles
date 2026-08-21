@@ -22,9 +22,9 @@ local colors = {
 	},
 	container = {
 		bg = 0x11ffffff,
-		border_color = 0x33ffffff,
-		nesting_bg = 0x15ffffff,
-		nesting_border_color = 0x35e2e2e3,
+		border_color = 0x27ffffff,
+		nesting_bg = 0x05ffffff,
+		nesting_border_color = 0x10e2e2e3,
 	},
 
 	with_alpha = function(color, alpha)

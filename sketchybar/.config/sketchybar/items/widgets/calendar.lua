@@ -1,6 +1,8 @@
 local settings = require("settings")
 local colors = require("colors")
 
+local nesting_padding = (settings.ui.container.height - settings.ui.container.nesting_height) / 2
+
 local cal_font = {
 	family = settings.font.text,
 	style = settings.font.style_map["Bold"],
@@ -14,6 +16,14 @@ sbar.add("item", "edge_padding", {
 	padding_right = settings.paddings.edge_padding,
 })
 
+local outer_right_padding = sbar.add("item", "widgets.calendar.outer.padding.right", {
+	position = "right",
+	width = nesting_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
+})
+
 local cal_time = sbar.add("item", "widgets.calendar.time", {
 	position = "right",
 	icon = { drawing = false },
@@ -23,7 +33,7 @@ local cal_time = sbar.add("item", "widgets.calendar.time", {
 		font = cal_font,
 		align = "center",
 	},
-	padding_right = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings - nesting_padding,
 	padding_left = settings.paddings.group_padding,
 })
 
@@ -36,8 +46,16 @@ local cal_date = sbar.add("item", "widgets.calendar.date", {
 		font = cal_font,
 		align = "center",
 	},
-	padding_left = settings.paddings.paddings,
+	padding_left = settings.paddings.paddings - nesting_padding,
 	update_freq = settings.widgets.calendar.update_freq,
+})
+
+local outer_left_padding = sbar.add("item", "widgets.calendar.outer.padding.left", {
+	position = "right",
+	width = nesting_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
 })
 
 sbar.add("item", "widgets.calendar.spacer", {
@@ -47,9 +65,24 @@ sbar.add("item", "widgets.calendar.spacer", {
 	width = settings.paddings.container_paddings,
 })
 
-sbar.add("bracket", {
+sbar.add("bracket", "widgets.calendar.inner", {
 	"widgets.calendar.time",
 	"widgets.calendar.date",
+}, {
+	background = {
+		color = colors.container.nesting_bg,
+		height = settings.ui.container.nesting_height,
+		corner_radius = settings.ui.container.nesting_corner_radius,
+		border_color = colors.container.nesting_border_color,
+		border_width = settings.ui.background.border_width + 1,
+	},
+})
+
+sbar.add("bracket", "widgets.calendar.outer", {
+	"widgets.calendar.outer.padding.left",
+	"widgets.calendar.time",
+	"widgets.calendar.date",
+	"widgets.calendar.outer.padding.right",
 }, {
 	background = {
 		color = colors.container.bg,

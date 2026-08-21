@@ -13,5 +13,5 @@ require("items.widgets.cpu")
 -- require("items.widgets.keyboard")
 require("items.widgets.system")
 
--- require("items.widgets.aerospace")
-require("items.widgets.yabai")
+require("items.widgets.aerospace_d")
+-- require("items.widgets.yabai")

@@ -15,6 +15,8 @@ local keyboard_settings = {
 	},
 }
 
+local nesting_padding = (settings.ui.container.height - settings.ui.container.nesting_height) / 2
+
 os.execute(
 	string.format(
 		"sketchybar --add event %s '%s' 2>/dev/null",
@@ -22,6 +24,16 @@ os.execute(
 		keyboard_settings.notification
 	)
 )
+
+local outer_right_padding = sbar.add("item", "widgets.system.outer.padding.right", {
+	position = "right",
+	width = nesting_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
+	padding_left = 0,
+	padding_right = 0,
+})
 
 local keyboard = sbar.add("item", "widgets.system.keyboard", {
 	position = "right",
@@ -33,7 +45,7 @@ local keyboard = sbar.add("item", "widgets.system.keyboard", {
 		color = colors.white,
 	},
 	padding_left = settings.paddings.paddings,
-	padding_right = settings.paddings.paddings,
+	padding_right = settings.paddings.paddings - 3,
 })
 
 local wifi = sbar.add("item", "widgets.system.wifi", {
@@ -45,8 +57,19 @@ local wifi = sbar.add("item", "widgets.system.wifi", {
 		},
 		align = "center",
 	},
-	padding_left = settings.paddings.paddings,
+	-- padding_left = settings.paddings.paddings - nesting_padding,
+	padding_left = settings.paddings.paddings - 3,
 	label = { drawing = false },
+})
+
+local outer_left_padding = sbar.add("item", "widgets.system.outer.padding.left", {
+	position = "right",
+	width = nesting_padding,
+	drawing = true,
+	icon = { drawing = false },
+	label = { drawing = false },
+	padding_left = 0,
+	padding_right = 0,
 })
 
 sbar.add("item", "widgets.system.spacer", {
@@ -56,9 +79,27 @@ sbar.add("item", "widgets.system.spacer", {
 	width = settings.paddings.paddings,
 })
 
-sbar.add("bracket", {
+-- Keep the related system indicators together inside the outer container.
+sbar.add("bracket", "widgets.system.inner", {
 	"widgets.system.wifi",
 	"widgets.system.keyboard",
+}, {
+	background = {
+		color = colors.container.nesting_bg,
+		height = settings.ui.container.nesting_height,
+		corner_radius = settings.ui.container.nesting_corner_radius,
+		border_color = colors.container.nesting_border_color,
+		border_width = settings.ui.background.border_width + 1,
+		-- padding_left = 0,
+		-- padding_right = 0,
+	},
+})
+
+sbar.add("bracket", "widgets.system.outer", {
+	"widgets.system.outer.padding.left",
+	"widgets.system.wifi",
+	"widgets.system.keyboard",
+	"widgets.system.outer.padding.right",
 }, {
 	background = {
 		color = colors.container.bg,
@@ -68,7 +109,6 @@ sbar.add("bracket", {
 		corner_radius = settings.ui.container.corner_radius,
 		y_offset = settings.ui.container.y_offset,
 	},
-	padding_left = settings.paddings.paddings,
 })
 
 local layout_script = [[

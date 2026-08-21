@@ -11,7 +11,7 @@ local font = {
 }
 
 local ui = {
-	bar_height = 36,
+	bar_height = 33,
 	-- bar_height = 38,
 	background = {
 		border_width = 0,
@@ -21,17 +21,19 @@ local ui = {
 
 		image = {
 			border_width = 1,
-			corner_radius = 24,
+			corner_radius = 23,
 		},
 	},
 	container = {
-		height = 28,
+		height = 24,
 		width = 38,
-		corner_radius = 10,
+		-- corner_radius = 9,
+		corner_radius = 15,
 		border_width = 1,
 		y_offset = 0,
 		nesting_height = 20,
-		nesting_corner_radius = 7,
+		-- nesting_corner_radius = 8,
+		nesting_corner_radius = 15,
 	},
 	image = {
 		corner_radius = 25,
@@ -48,7 +50,7 @@ local ui = {
 local paddings = {
 	paddings = 10,
 	group_padding = 5,
-	edge_padding = 13,
+	edge_padding = 8,
 	container_paddings = 7,
 }
 

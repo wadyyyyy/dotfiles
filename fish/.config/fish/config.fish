@@ -39,6 +39,7 @@ abbr -a niriconf "nvim ~/.config/niri/"
 abbr -a riftconf "nvim ~/.config/rift/config.toml"
 abbr -a ybconf "nvim ~/.config/yabai/"
 abbr -a skhdconf "nvim ~/.config/skhd/skhdrc"
+abbr -a sqlsconf "nvim ~/.config/sqls/config.yml"
 
 abbr -a cm chezmoi
 abbr -a ip "curl ipinfo.io"
@@ -65,6 +66,10 @@ abbr -a gcl "git clone"
 
 abbr -a dps "docker ps"
 
+abbr -a gr "go run"
+abbr -a gm "go mod"
+abbr -a gmt "go mod tidy"
+
 function cheat
     curl -s "https://cheat.sh/$argv"
 end
@@ -76,6 +81,7 @@ alias cd z
 alias rm rmt
 alias ls lsd
 alias n nvim
+alias cal "~/go/bin/calendar"
 abbr -a yz yazi
 
 bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
