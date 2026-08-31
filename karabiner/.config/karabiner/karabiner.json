@@ -9,6 +9,7 @@
                 "rules": [
                     {
                         "description": "Double tap Fn to Shift + Fn + F10 (Context Menu)",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [

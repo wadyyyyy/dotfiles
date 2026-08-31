@@ -66,13 +66,13 @@ return {
     },
   },
 
-  keys = {
-    {
-      "<leader>0",
-      function()
-        Snacks.dashboard()
-      end,
-      desc = "Dashboard",
-    },
-  },
+  -- keys = {
+  --   {
+  --     "<leader>0",
+  --     function()
+  --       Snacks.dashboard()
+  --     end,
+  --     desc = "Dashboard",
+  --   },
+  -- },
 }

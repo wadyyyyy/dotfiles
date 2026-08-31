@@ -6,3 +6,6 @@ debug
 foo.*
 *.log
 data
+*whatthefuck*
+db_private.lua
+

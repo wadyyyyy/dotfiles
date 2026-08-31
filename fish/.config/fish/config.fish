@@ -65,6 +65,7 @@ abbr -a gr "git remote -v"
 abbr -a gcl "git clone"
 
 abbr -a dps "docker ps"
+abbr -a doco "docker compose"
 
 abbr -a gr "go run"
 abbr -a gm "go mod"
@@ -83,6 +84,8 @@ alias ls lsd
 alias n nvim
 alias cal "~/go/bin/calendar"
 abbr -a yz yazi
+
+alias nl "NVIM_APPNAME=nvim-lazy nvim"
 
 bind ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
 bind -M insert ctrl-\\ 'status test-terminal-feature scroll-content-up && commandline -f scrollback-push; commandline -f clear-screen'
