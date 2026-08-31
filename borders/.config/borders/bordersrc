@@ -2,7 +2,8 @@
 
 options=(
   style=round
-  width=1.0
+  # style=square
+  width=3.0
   hidpi=on
   order=above
 
