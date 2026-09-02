@@ -8,4 +8,5 @@ foo.*
 data
 *whatthefuck*
 db_private.lua
-
+.DS_Store
+ui.lua

@@ -80,7 +80,8 @@ alias ff "fastfetch --config ~/.config/fastfetch/apple.jsonc"
 abbr -a c clear
 alias cd z
 alias rm rmt
-alias ls lsd
+# alias ls lsd
+alias ls "lsd -lah --group-dirs first"
 alias n nvim
 alias cal "~/go/bin/calendar"
 abbr -a yz yazi
@@ -147,6 +148,8 @@ while True:
 
     echo started
 end
+
+set -gx VIRTUAL_ENV_DISABLE_PROMPT 1
 
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.

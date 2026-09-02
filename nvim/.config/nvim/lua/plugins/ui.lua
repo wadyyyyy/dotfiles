@@ -14,4 +14,13 @@ return {
       }
     end,
   },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      news = {
+        lazyvim = false,
+        neovim = false,
+      },
+    },
+  },
 }

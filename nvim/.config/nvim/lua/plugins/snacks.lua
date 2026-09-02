@@ -6,6 +6,7 @@ return {
     },
 
     picker = {
+      enabled = false,
       sources = {
         buffers = {
           sort_lastused = true,
@@ -18,6 +19,7 @@ return {
         },
 
         explorer = {
+          enabled = false,
           focus = false,
           hidden = true,
           ignored = true,
@@ -46,7 +48,7 @@ return {
     },
 
     dashboard = {
-      enabled = false,
+      enabled = true,
       preset = {
         header = {
           [[                                                    

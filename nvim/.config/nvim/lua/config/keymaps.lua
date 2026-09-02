@@ -27,3 +27,9 @@ vim.keymap.set("i", "<C-j>", function()
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-j>", true, true, true), "n", true)
   end
 end, { desc = "Copilot Native Accept" })
+
+vim.api.nvim_create_user_command("Dash", function()
+  Snacks.dashboard()
+end, { desc = "Open Dashboard" })
+
+vim.cmd("cnoreabbrev dash Dash")

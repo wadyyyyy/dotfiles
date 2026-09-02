@@ -1,4 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
+add_newline = true
+command_timeout = 200
 
 format = """
 $username\
@@ -9,7 +11,12 @@ $git_state\
 $git_status\
 $cmd_duration\
 $line_break\
+$docker_context\
 $python\
+$golang\
+$lua\
+$sql\
+$c\
 $character"""
 
 [directory]
@@ -44,7 +51,22 @@ format = "[$duration]($style) "
 style = "yellow"
 
 [python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
-detect_extensions = []
-detect_files = []
+symbol = "py "
+style = "bold yellow"
+format = "via [${symbol}(${version} )(\\($virtualenv\\) )]($style)"
+
+[golang]
+symbol = "go "
+style = "bold cyan"
+
+[c]
+symbol = "c "
+style = "bold blue"
+detect_files = ["Makefile", "CMakeLists.txt", "compile_commands.json", ".clang-format", "configure"]
+# detect_folders = ["src", "inc", "include"]
+
+[lua]
+symbol = "lua "
+style = "bold blue"
+detect_files = ["init.lua", ".stylua.toml"]
+detect_folders = ["lua"]
