@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 echo "setting macos defaults..."
 
 defaults write com.apple.finder ShowPathbar -bool true
@@ -62,21 +64,37 @@ fi
 echo "~~~ adding symlinks with gnu stow..."
 stow -v */
 
-FISH_PATH="/opt/homebrew/bin/fish"
+FISH_PATH="$(command -v fish)"
 
 if ! grep -q "$FISH_PATH" /etc/shells; then
     echo "~~~ adding fish to /etc/shells (requires sudo)..."
     echo "$FISH_PATH" | sudo tee -a /etc/shells
 fi
 
-if [ "$SHELL" != "$FISH_PATH" ]; then
+if [ "${SHELL:-}" != "$FISH_PATH" ]; then
     echo "~~~ setting fish as default shell..."
     chsh -s "$FISH_PATH"
 else
     echo "~~~ fish is already default shell."
 fi
 
+if ! fish -c 'type -q fisher'; then
+    echo "~~~ installing fisher..."
+    fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher'
+fi
+
+echo "~~~ installing fish plugins..."
+fish -c 'fisher update'
+
+echo "~~~ starting desktop services..."
 yabai --start-service
-skhd --start-service
+sketchybar --start-service
+open -ga AeroSpace
+
+if skhd --stop-service; then
+    echo "~~~ skhd autostart disabled."
+else
+    echo "~~~ skhd service was not running."
+fi
 
 echo "~~~ all done! reboot system"

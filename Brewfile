@@ -14,6 +14,10 @@ brew "btop"
 brew "check"
 # Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
 brew "clang-format"
+# Cross-platform make
+brew "cmake"
+# Documentation for CMake
+brew "cmake-docs"
 # Console Matrix
 brew "cmatrix"
 # CPU architecture fetching tool
@@ -21,13 +25,15 @@ brew "cpufetch"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Pack, ship and run any application as a lightweight container
-brew "docker", link: false
+brew "docker"
 # Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-buildx"
 # Isolated development environments using Docker
 brew "docker-compose"
 # Platform keystore credential helper for Docker
 brew "docker-credential-helper"
+# GNU Emacs text editor
+brew "emacs"
 # Like neofetch, but much faster because written mostly in C
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
@@ -38,12 +44,16 @@ brew "ffmpegthumbnailer"
 brew "fish"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GitHub command-line tool
+brew "gh"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Git extension for versioning large files
 brew "git-lfs"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Post-modern modal text editor
+brew "helix"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
@@ -66,8 +76,14 @@ brew "neovim"
 brew "node"
 # Retrieves currently playing media, and simulates media actions
 brew "nowplaying-cli"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# AI coding agent, built for the terminal
+brew "opencode"
 # Sliding, tiling window manager for MacOS
 brew "paneru"
+# Highly capable, feature-rich programming language
+brew "perl"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.14"
 # CLI for Postgres with auto-completion and syntax highlighting
@@ -80,12 +96,18 @@ brew "poppler"
 brew "postgresql@18", link: true
 # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew "proctools"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
+# Cross-platform application and UI framework
+brew "qt@5", link: true
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
 # Prints a steam locomotive if you type sl instead of ls
 brew "sl"
+# Command-line tool to customize Spotify client
+brew "spicetify-cli"
+# Whitespace formatter for different query languages
+brew "sql-formatter"
+# SQL linter and auto-formatter for Humans
+brew "sqlfluff"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Organize software neatly under a single directory tree (e.g. /usr/local)
@@ -102,6 +124,8 @@ brew "tree"
 brew "tree-sitter-cli"
 # Minimal zsh prompt
 brew "typewritten"
+# Terminal UI for SQL databases
+brew "vi-sql"
 # Internet file retriever
 brew "wget"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -114,16 +138,22 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 # Tiling window manager for macOS
 brew "acsandmann/tap/rift", trusted: true
-# Simple hotkey-daemon for macOS.
-brew "asmvik/formulae/skhd", trusted: true
 # A tiling window manager for macOS based on binary space partitioning.
 brew "asmvik/formulae/yabai", trusted: true
 # A window border system for macOS
 brew "felixkratz/formulae/borders"
 # Custom macOS statusbar with shell plugin, interaction and graph support
 brew "felixkratz/formulae/sketchybar"
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "nikitabobko/tap/aerospace", trusted: true
 # Application uninstaller
 cask "appcleaner"
+# 3D creation suite
+cask "blender"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
 # Write, edit, and chat about your code with AI
@@ -147,12 +177,14 @@ cask "handbrake-app"
 cask "homerow"
 # Keyboard customiser
 cask "karabiner-elements"
-# Free cross-platform office suite, fresh version
-cask "libreoffice"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Geographic Information System
+cask "qgis"
+# IDE for application development
+cask "qt-creator"
 # Control your tools with a few keystrokes
 cask "raycast"
 # Tool that provides consistent, highly configurable symbols for apps
@@ -165,25 +197,44 @@ cask "upscayl"
 cask "utm"
 # Multimedia player
 cask "vlc"
-# Multiplayer code editor
-cask "zed"
 # Gecko based web browser
 cask "zen"
 # Keyboard-first, local-first Markdown notes with vim motions and live preview
 cask "zennotes/tap/zennotes", trusted: true
-vscode "asvetliakov.vscode-neovim"
+vscode "be5invis.vscode-custom-css"
 vscode "brandonkirbyson.vscode-animations"
-vscode "drcika.apc-extension"
+vscode "cweijan.dbclient-jdbc"
+vscode "cweijan.vscode-database-client2"
+vscode "golang.go"
+vscode "inferrinizzard.prettier-sql-vscode"
+vscode "jdinhlife.gruvbox"
 vscode "llvm-vs-code-extensions.vscode-clangd"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpp-devtools"
-vscode "ms-vscode.cpptools-themes"
+vscode "mtxr.sqltools"
+vscode "mtxr.sqltools-driver-pg"
 vscode "pkief.material-icon-theme"
+vscode "ritwickdey.liveserver"
 vscode "subframe7536.custom-ui-style"
-vscode "vadimtimchenko.tabspicker"
+vscode "twxs.cmake"
 vscode "vscodevim.vim"
+vscode "wayou.vscode-todo-highlight"
+go "github.com/maaslalani/calendar"
 go "github.com/go-delve/delve/cmd/dlv"
 go "mvdan.cc/gofumpt"
 go "golang.org/x/tools/cmd/goimports"
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
 go "golang.org/x/tools/gopls"
+npm "@sqltools/formatter"
 npm "@vscode/vsce"

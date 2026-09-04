@@ -18,8 +18,10 @@ set -g fish_color_autosuggestion 585b70
 set -gx EDITOR nvim
 set -gx VISUAL nvim
 
-fish_add_path /Users/wady/.local/bin
+fish_add_path "$HOME/.local/bin"
 bind -M visual -m default y fish_clipboard_copy end-selection repaint-mode
+
+source "$HOME/.config/fish/tide.config.fish"
 
 abbr -a asrc "source ~/.config/fish/config.fish"
 
