@@ -40,3 +40,4 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.cmd("vertical resize 26")
   end,
 })
+vim.g.db_ui_disable_mappings = 1

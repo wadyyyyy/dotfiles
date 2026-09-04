@@ -60,12 +60,12 @@ preset = 'qwerty'
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 8
-inner.vertical = 8
-outer.top = 9
-outer.left = 8
-outer.right = 8
-outer.bottom = 9
+inner.horizontal = 10
+inner.vertical = 10
+outer.top = 10
+outer.left = 10
+outer.right = 10
+outer.bottom = 10
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.main.binding]

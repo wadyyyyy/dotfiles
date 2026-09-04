@@ -11,7 +11,7 @@ fzf --fish | source
 source "$HOME/.atuin/bin/env.fish" 2>/dev/null; or true
 atuin init fish | source
 
-starship init fish | source
+# starship init fish | source
 
 set -g fish_color_autosuggestion 585b70
 
@@ -45,7 +45,7 @@ abbr -a cm chezmoi
 abbr -a ip "curl ipinfo.io"
 abbr -a ta "tmux a"
 abbr -a tn tmux
-abbr -a nvim-kick "env NVIM_APPNAME=nvim-kickstart nvim"
+alias kick "NVIM_APPNAME=nvim-kickstart nvim"
 abbr -a sp "sudo pacman -S"
 
 abbr -a lg lazygit

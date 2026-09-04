@@ -27,10 +27,10 @@ local ui = {
 	container = {
 		height = 24,
 		width = 38,
-		-- corner_radius = 9,
-		corner_radius = 15,
+		corner_radius = 7,
+		-- corner_radius = 15,
 		border_width = 1,
-		y_offset = -10,
+		y_offset = -0,
 		nesting_height = 20,
 		-- nesting_corner_radius = 8,
 		nesting_corner_radius = 15,
@@ -50,7 +50,7 @@ local ui = {
 local paddings = {
 	paddings = 10,
 	group_padding = 5,
-	edge_padding = 8,
+	edge_padding = 9,
 	container_paddings = 7,
 }
 

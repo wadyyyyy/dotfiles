@@ -11,7 +11,6 @@ $git_state\
 $git_status\
 $cmd_duration\
 $line_break\
-$docker_context\
 $python\
 $golang\
 $lua\
@@ -62,7 +61,7 @@ style = "bold cyan"
 [c]
 symbol = "c "
 style = "bold blue"
-detect_files = ["Makefile", "CMakeLists.txt", "compile_commands.json", ".clang-format", "configure"]
+detect_files = ["CMakeLists.txt", "compile_commands.json", ".clang-format", "configure"]
 # detect_folders = ["src", "inc", "include"]
 
 [lua]

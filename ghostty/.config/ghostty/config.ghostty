@@ -12,8 +12,6 @@ cursor-style-blink = false
 # ( ) i $ <=
 
 window-padding-balance = true
-# window-padding-x = 14
-# window-padding-y = 14
 window-padding-x = 14
 window-padding-y = 14
 # window-padding-color = extend
@@ -21,7 +19,7 @@ window-padding-y = 14
 # macbook
 font-size = 13.0
 font-family = "0xProto Nerd Font Mono"
-adjust-cell-height = 2
+adjust-cell-height = 5
 adjust-cell-width = 1
 font-feature = cv31
 font-feature = cv06

@@ -13,7 +13,6 @@ Personal macOS dotfiles: shell, terminal, WM, status bar, editor, brew casks and
 - `nvim` — LazyVim-based Neovim config.
 - `karabiner` — keyboard remaps.
 - `fastfetch` — preset (`apple.jsonc`).
-- `OBS` settings
 - `Brewfile` — brew dump.
 - `bootstrap.sh` — proceed installation
 
@@ -25,7 +24,7 @@ Each top-level folder mirrors the corresponding `~/.config/...` path:
 dotfiles/
 ├── yabai/.config/yabai/yabairc
 ├── skhd/.config/skhd/skhdrc
-├── aerospace/.config/aerospace/aerospace.toml (unused)
+├── aerospace/.config/aerospace/aerospace.toml 
 ├── fastfetch/.config/fastfetch/*
 ├── fish/.config/fish/config.fish
 ├── ghostty/.config/ghostty/*

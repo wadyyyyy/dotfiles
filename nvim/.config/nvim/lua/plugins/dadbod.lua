@@ -22,6 +22,22 @@ return {
   },
   {
     "kristijanhusak/vim-dadbod-completion",
-    -- enabled = false,
+    -- The SQL extra adds this plugin and wires it into blink.cmp. Keep the
+    -- plugin disabled while removing that wiring below so the rest of
+    -- blink.cmp remains available for every filetype.
+    enabled = false,
+  },
+  {
+    "saghen/blink.cmp",
+    opts = function(_, opts)
+      local sources = opts.sources or {}
+      local defaults = sources.default or {}
+      local providers = sources.providers or {}
+
+      sources.default = vim.tbl_filter(function(source)
+        return source ~= "dadbod"
+      end, defaults)
+      providers.dadbod = nil
+    end,
   },
 }
