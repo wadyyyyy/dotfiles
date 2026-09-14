@@ -1,0 +1,244 @@
+tap "acsandmann/tap"
+tap "asmvik/formulae"
+tap "barutsrb/tap", "https://github.com/BarutSRB/homebrew-tap", trusted: { casks: ["omniwm"] }
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae", trusted: true
+tap "nikitabobko/tap"
+tap "zennotes/tap"
+# Code searching, linting, rewriting
+brew "ast-grep"
+# Generate compilation database for clang tooling
+brew "bear"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
+# C unit testing framework
+brew "check"
+# Formatting tools for C, C++, Obj-C, Java, JavaScript, TypeScript
+brew "clang-format"
+# Cross-platform make
+brew "cmake"
+# Documentation for CMake
+brew "cmake-docs"
+# Console Matrix
+brew "cmatrix"
+# CPU architecture fetching tool
+brew "cpufetch"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+# Docker CLI plugin for extended build capabilities with BuildKit
+brew "docker-buildx"
+# Isolated development environments using Docker
+brew "docker-compose"
+# Platform keystore credential helper for Docker
+brew "docker-credential-helper"
+# Select default apps for documents and URL schemes on macOS
+brew "duti"
+# GNU Emacs text editor
+brew "emacs"
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Create thumbnails for your video files
+brew "ffmpegthumbnailer"
+# User-friendly command-line shell for UNIX-like operating systems
+brew "fish"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
+# Git extension for versioning large files
+brew "git-lfs"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
+# Post-modern modal text editor
+brew "helix"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Simple terminal UI for git commands
+brew "lazygit"
+# Clone of ls with colorful output, file type icons, and more
+brew "lsd"
+# Powerful, lightweight programming language
+brew "lua"
+# Package manager for the Lua programming language
+brew "luarocks"
+# Utility for directing compilation
+brew "make"
+# Deep clean and optimize your Mac
+brew "mole"
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Retrieves currently playing media, and simulates media actions
+brew "nowplaying-cli"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# AI coding agent, built for the terminal
+brew "opencode"
+# Sliding, tiling window manager for MacOS
+brew "paneru"
+# Highly capable, feature-rich programming language
+brew "perl"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
+# CLI for Postgres with auto-completion and syntax highlighting
+brew "pgcli"
+# Execute binaries from Python packages in isolated environments
+brew "pipx"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Object-relational database system
+brew "postgresql@18", link: true
+# OpenBSD and Darwin versions of pgrep, pkill, and pfind
+brew "proctools"
+# Cross-platform application and UI framework
+brew "qt@5", link: true
+# Python bindings for v5 of Qt
+brew "pyqt@5"
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
+# Prints a steam locomotive if you type sl instead of ls
+brew "sl"
+# Command-line tool to customize Spotify client
+brew "spicetify-cli"
+# Whitespace formatter for different query languages
+brew "sql-formatter"
+# SQL linter and auto-formatter for Humans
+brew "sqlfluff"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
+# Change macOS audio source from the command-line
+brew "switchaudio-osx"
+# Programmatically correct mistyped console commands
+brew "thefuck"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Parser generator tool
+brew "tree-sitter-cli"
+# Minimal zsh prompt
+brew "typewritten"
+# Terminal UI for SQL databases
+brew "vi-sql"
+# Internet file retriever
+brew "wget"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# Tiling window manager for macOS
+brew "acsandmann/tap/rift", trusted: true
+# A tiling window manager for macOS based on binary space partitioning.
+brew "asmvik/formulae/yabai", trusted: true
+# A window border system for macOS
+brew "felixkratz/formulae/borders"
+# Custom macOS statusbar with shell plugin, interaction and graph support
+brew "felixkratz/formulae/sketchybar"
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "nikitabobko/tap/aerospace", trusted: true
+# Application uninstaller
+cask "appcleaner"
+# 3D creation suite
+cask "blender"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
+# Brings the power of Copilot coding agent directly to your terminal
+cask "copilot-cli"
+# Write, edit, and chat about your code with AI
+cask "cursor"
+# Browser for SQLite databases
+cask "db-browser-for-sqlite"
+# Web browser
+cask "firefox"
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono-nerd-font"
+cask "font-iosevka"
+cask "font-jetbrains-mono-nerd-font"
+cask "font-sf-mono"
+cask "font-sf-pro"
+cask "font-sketchybar-app-font"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
+# Open-source video transcoder
+cask "handbrake-app"
+# Keyboard shortcuts for every button on your screen
+cask "homerow"
+# Keyboard customiser
+cask "karabiner-elements"
+# Open-source software for live streaming and screen recording
+cask "obs"
+# Knowledge base that works on top of a local folder of plain text Markdown files
+cask "obsidian"
+# Geographic Information System
+cask "qgis"
+# IDE for application development
+cask "qt-creator"
+# UI design and development tool
+cask "qt-design-studio"
+# Control your tools with a few keystrokes
+cask "raycast"
+# Tool that provides consistent, highly configurable symbols for apps
+cask "sf-symbols"
+# Utility to hide the notch
+cask "topnotch"
+# AI image upscaler
+cask "upscayl"
+# Virtual machines UI using QEMU
+cask "utm"
+# Multimedia player
+cask "vlc"
+# Gecko based web browser
+cask "zen"
+# Keyboard-first, local-first Markdown notes with vim motions and live preview
+cask "zennotes/tap/zennotes", trusted: true
+vscode "cweijan.dbclient-jdbc"
+vscode "cweijan.vscode-database-client2"
+vscode "golang.go"
+vscode "inferrinizzard.prettier-sql-vscode"
+vscode "jdinhlife.gruvbox"
+vscode "llvm-vs-code-extensions.vscode-clangd"
+vscode "ms-azuretools.vscode-containers"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpp-devtools"
+vscode "mtxr.sqltools"
+vscode "mtxr.sqltools-driver-pg"
+vscode "pkief.material-icon-theme"
+vscode "ritwickdey.liveserver"
+vscode "subframe7536.custom-ui-style"
+vscode "twxs.cmake"
+vscode "vscodevim.vim"
+vscode "wayou.vscode-todo-highlight"
+go "github.com/maaslalani/calendar"
+go "github.com/go-delve/delve/cmd/dlv"
+go "mvdan.cc/gofumpt"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "golang.org/x/tools/gopls"
+npm "@sqltools/formatter"
+npm "@vscode/vsce"
