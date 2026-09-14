@@ -46,19 +46,22 @@ mkdir -p ~/.config
 
 echo "~~~ setting up homebrew..."
 if ! command -v brew &>/dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 else
-    echo "~~~homebrew is already installed"
+  echo "~~~homebrew is already installed"
 fi
+
+brew trust nikitabobko/tap
+brew trust asmvik/formulae
 
 echo "~~~ downloading dependencies, utils and casks from brewfile..."
 if [ -f "./Brewfile" ]; then
-    brew bundle --file=./Brewfile
+  brew bundle --file=./Brewfile
 else
-    echo "~~~ brewfile not found! installing stow and fish..."
-    brew install stow fish
+  echo "~~~ brewfile not found! installing stow and fish..."
+  brew install stow fish
 fi
 
 echo "~~~ adding symlinks with gnu stow..."
@@ -67,20 +70,20 @@ stow -v */
 FISH_PATH="$(command -v fish)"
 
 if ! grep -q "$FISH_PATH" /etc/shells; then
-    echo "~~~ adding fish to /etc/shells (requires sudo)..."
-    echo "$FISH_PATH" | sudo tee -a /etc/shells
+  echo "~~~ adding fish to /etc/shells (requires sudo)..."
+  echo "$FISH_PATH" | sudo tee -a /etc/shells
 fi
 
 if [ "${SHELL:-}" != "$FISH_PATH" ]; then
-    echo "~~~ setting fish as default shell..."
-    chsh -s "$FISH_PATH"
+  echo "~~~ setting fish as default shell..."
+  chsh -s "$FISH_PATH"
 else
-    echo "~~~ fish is already default shell."
+  echo "~~~ fish is already default shell."
 fi
 
 if ! fish -c 'type -q fisher'; then
-    echo "~~~ installing fisher..."
-    fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher'
+  echo "~~~ installing fisher..."
+  fish -c 'curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher'
 fi
 
 echo "~~~ installing fish plugins..."
@@ -92,9 +95,7 @@ sketchybar --start-service
 open -ga AeroSpace
 
 if skhd --stop-service; then
-    echo "~~~ skhd autostart disabled."
-else
-    echo "~~~ skhd service was not running."
+  echo "~~~ skhd autostart disabled."
 fi
 
 echo "~~~ all done! reboot system"
