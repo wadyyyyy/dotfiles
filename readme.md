@@ -60,12 +60,6 @@ The bootstrap script:
 
 Run it from the repository root. Existing local configuration files may need to be moved out of the way before Stow can create its symlinks.
 
-## Fish and Tide
-
-Fish is the default shell. `fish/.config/fish/config.fish` contains aliases, abbreviations, editor variables, tool initialization, and project-specific helpers. Tide's generated functions are kept under `fish/.config/fish/functions`; the reproducible user choices live separately in `fish/.config/fish/tide.config.fish`.
-
-The current Tide layout shows the working directory, Git state, a newline, and the command character on the left. The right side reports status, duration, context, jobs, and detected development tools.
-
 ## Window management notes
 
 AeroSpace is the window manager and primary workspace system. It starts at login and sends workspace events to Sketchybar. Yabai is used only for window opacity through its scripting addition. SKHD is retained as a legacy hotkey configuration but is not started automatically.
